@@ -1,0 +1,17 @@
+{
+  "id": "trial_outcome_01",
+  "run_id": "REPLACE_WITH_REAL_LOCAL_RUN_ID",
+  "proposal_id": "inventory_trial",
+  "proposal_version": 1,
+  "period_start": "2026-10-24",
+  "period_end": "2026-10-31",
+  "synthetic": true,
+  "source_note": "填写实际记录来源；若使用合成示例必须保持synthetic为true。此文件仅为填写模板。",
+  "fixed_spend": "100.00",
+  "hours_spent": 3,
+  "costs_confirmed": true,
+  "items": [
+    {"sku": "COAT_02", "units_sold": 2, "units_returned": 0, "units_returned_resellable": 0, "cash_received": "278.00", "refund_paid": "0.00", "variable_spend": "10.00"}
+  ],
+  "observations": ["示例反馈，需要替换为该次试验的实际观察；不能用这些数字宣称经营成效。"]
+}

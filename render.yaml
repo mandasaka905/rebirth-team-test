@@ -1,0 +1,30 @@
+# Paid compute + persistent disk. Review the dashboard quote before creating.
+# Repository root for this file must be the rebirth application directory.
+services:
+  - type: web
+    name: rebirth-team-test
+    runtime: docker
+    region: singapore
+    plan: 0.5c-512mb
+    numInstances: 1
+    autoDeployTrigger: "off"
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: rebirth-state
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: REBIRTH_DATA_DIR
+        value: /data/state
+      - key: REBIRTH_VOLUME_PATH
+        value: /data
+      - key: REBIRTH_REQUIRE_VOLUME
+        value: "true"
+      - key: REBIRTH_REGISTRATION_OPEN
+        value: "true"
+      - key: REBIRTH_REGISTRATION_LIMIT
+        value: "30"
+      - key: REBIRTH_DEMO_ONLY
+        value: "true"

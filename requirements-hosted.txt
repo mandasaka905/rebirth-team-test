@@ -1,0 +1,2 @@
+# Separate dependency for the explicitly enabled hosted server; desktop kits remain stdlib-only.
+waitress==3.0.2

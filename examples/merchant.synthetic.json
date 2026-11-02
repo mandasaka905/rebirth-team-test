@@ -1,0 +1,31 @@
+{
+  "merchant_id": "sample_clothing",
+  "name": "社区服装店（合成测试，不是真实商户）",
+  "as_of": "2026-10-24",
+  "currency": "CNY",
+  "synthetic": true,
+  "merchant_confirmed": false,
+  "goal": "调查库存结构与资金压力，比较低投入的经营假设。",
+  "cash_balance": "12000.00",
+  "reserve_floor": "2000.00",
+  "max_trial_budget": "2000.00",
+  "weekly_available_hours": 6,
+  "sources": {
+    "stock_fixture": "人为编制的库存测试数据，非商户实测",
+    "cash_fixture": "人为编制的收支测试数据，非商户实测",
+    "interview_fixture": "人为编制的访谈测试记录，不能作为市场需求证据"
+  },
+  "completeness": {
+    "obligations_complete": true,
+    "receivables_complete": true,
+    "inventory_complete": true
+  },
+  "products": [
+    {"sku": "TOP_01", "name": "换季衬衫", "stock": 40, "sales_30d": 3, "received_on": "2026-04-01", "unit_cost": "60.00", "unit_price": "99.00", "size_complete": false, "source_id": "stock_fixture"},
+    {"sku": "COAT_02", "name": "基础外套", "stock": 20, "sales_30d": 4, "received_on": "2026-06-01", "unit_cost": "80.00", "unit_price": "139.00", "size_complete": true, "source_id": "stock_fixture"},
+    {"sku": "KNIT_03", "name": "针织衫", "stock": 12, "sales_30d": 8, "received_on": "2026-10-01", "unit_cost": "70.00", "unit_price": "119.00", "size_complete": true, "source_id": "stock_fixture"}
+  ],
+  "obligations": [{"id": "rent", "date": "2026-10-30", "amount": "8000.00", "source_id": "cash_fixture"}],
+  "receivables": [],
+  "customer_signals": [{"observation": "测试情境：有顾客询问下班后的预约试衣服务，尚无成交与付款证据。", "source_id": "interview_fixture"}]
+}

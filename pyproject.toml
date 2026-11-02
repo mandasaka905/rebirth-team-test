@@ -1,0 +1,9 @@
+[project]
+name = "rebirth-agents"
+version = "0.6.0"
+description = "Evidence-based collaborative decision support for small retailers"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 100

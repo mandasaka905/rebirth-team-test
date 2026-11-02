@@ -1,0 +1,9 @@
+{
+  "answers": [
+    {
+      "question_id": "merchant_confirmation",
+      "value": true,
+      "source_note": "仅确认示例的合成底账字段，不作为真实商户授权或经营数据。"
+    }
+  ]
+}

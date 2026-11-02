@@ -1,0 +1,225 @@
+{
+  "merchant_id": "planning_sample",
+  "name": "经营重构完整样例（全部合成）",
+  "as_of": "2026-10-25",
+  "currency": "CNY",
+  "synthetic": true,
+  "merchant_confirmed": true,
+  "goal": "仅用于本地验收：调查库存与经营期间变化，比较不同小步试验；无真实商户或收益结论。",
+  "cash_balance": "12000.00",
+  "reserve_floor": "2000.00",
+  "max_trial_budget": "2000.00",
+  "weekly_available_hours": 6,
+  "sources": {
+    "stock_fixture": "合成库存，用于检查未知成本和缺码",
+    "cash_fixture": "合成付款记录",
+    "demand_fixture": "合成预约询问，不是订单",
+    "period_fixture": "人为编制的两期经营记录，无真实经营成效"
+  },
+  "completeness": {
+    "inventory_complete": true,
+    "obligations_complete": true,
+    "receivables_complete": true
+  },
+  "products": [
+    {
+      "sku": "TOP_01",
+      "name": "换季衬衫",
+      "stock": 40,
+      "sales_30d": 3,
+      "received_on": "2026-04-01",
+      "unit_cost": "60.00",
+      "unit_price": "99.00",
+      "size_complete": false,
+      "source_id": "stock_fixture"
+    },
+    {
+      "sku": "COAT_02",
+      "name": "基础外套",
+      "stock": 20,
+      "sales_30d": 4,
+      "received_on": "2026-06-01",
+      "unit_cost": "80.00",
+      "unit_price": "139.00",
+      "size_complete": true,
+      "source_id": "stock_fixture"
+    },
+    {
+      "sku": "KNIT_03",
+      "name": "针织衫",
+      "stock": 12,
+      "sales_30d": 8,
+      "received_on": "2026-10-01",
+      "unit_cost": "70.00",
+      "unit_price": "119.00",
+      "size_complete": true,
+      "source_id": "stock_fixture"
+    }
+  ],
+  "obligations": [
+    {
+      "id": "rent",
+      "label_text": "合成房租",
+      "date": "2026-10-30",
+      "amount": "8000.00",
+      "source_id": "cash_fixture"
+    }
+  ],
+  "receivables": [],
+  "customer_signals": [
+    {
+      "observation": "合成访谈：有顾客询问下班后预约试衣，未发生实际成交。",
+      "source_id": "demand_fixture"
+    }
+  ],
+  "operating_periods": [
+    {
+      "id": "period_sep",
+      "start": "2026-09-01",
+      "end": "2026-09-30",
+      "revenue": "36000.00",
+      "goods_cost": "18000.00",
+      "operating_cost": "8000.00",
+      "visits": 600,
+      "buyers": 180,
+      "returning_buyers": 90,
+      "source_id": "period_fixture",
+      "scope_id": "shop_all",
+      "count_basis": "person_visits",
+      "scope_description": "全店同口径合成记录"
+    },
+    {
+      "id": "period_oct",
+      "start": "2026-10-01",
+      "end": "2026-10-20",
+      "revenue": "21000.00",
+      "goods_cost": "13000.00",
+      "operating_cost": "9000.00",
+      "visits": 300,
+      "buyers": 70,
+      "returning_buyers": 20,
+      "source_id": "period_fixture",
+      "scope_id": "shop_all",
+      "count_basis": "person_visits",
+      "scope_description": "全店同口径合成记录"
+    }
+  ],
+  "business_models": [
+    {
+      "id": "current",
+      "name": "现有门店销售（合成）",
+      "status": "current",
+      "customer_segment": "社区到店居民",
+      "customer_problem": "试穿与选购",
+      "value_proposition": "到店试穿后购买",
+      "channel": "自然到店",
+      "fulfilment": "线下交付与人工售后",
+      "revenue_method": "按件销售",
+      "key_resources": "已有服装和店面",
+      "required_skills": "接待\n库存核对",
+      "available_skills": "接待\n库存核对",
+      "demand_evidence": "全部为人工编制，订单不是预测",
+      "source_note": "合成经营模式假设，未实地验证",
+      "period_days": 30,
+      "unit_revenue": "139.00",
+      "unit_cost": "80.00",
+      "fixed_cost": "8000.00",
+      "investment": "0.00",
+      "assumed_orders": 100,
+      "weekly_hours": 6,
+      "costs_confirmed": true,
+      "version": 1
+    },
+    {
+      "id": "appointment",
+      "name": "晚间预约候选（合成假设）",
+      "status": "candidate",
+      "customer_segment": "社区到店居民",
+      "customer_problem": "试穿与选购",
+      "value_proposition": "到店试穿后购买",
+      "channel": "已有自愿咨询与预约",
+      "fulfilment": "线下交付与人工售后",
+      "revenue_method": "按件销售",
+      "key_resources": "已有服装和店面",
+      "required_skills": "接待\n预约协调",
+      "available_skills": "接待\n库存核对",
+      "demand_evidence": "全部为人工编制，订单不是预测",
+      "source_note": "合成经营模式假设，未实地验证",
+      "period_days": 30,
+      "unit_revenue": "139.00",
+      "unit_cost": "80.00",
+      "fixed_cost": "8000.00",
+      "investment": "100.00",
+      "assumed_orders": 150,
+      "weekly_hours": 6,
+      "costs_confirmed": true,
+      "version": 1
+    }
+  ],
+  "accounts": {
+    "opening": {
+      "date": "2026-10-01",
+      "balance": "12500.00",
+      "source_note": "合成期初"
+    },
+    "purchases": [
+      {
+        "id": "po_demo",
+        "date": "2026-10-20",
+        "sku": "COAT_02",
+        "quantity": 5,
+        "unit_cost": "100.00",
+        "other_cost": "0.00",
+        "due_date": "2026-10-25",
+        "supplier": "合成供货代号",
+        "external_ref": "SYN-INV-001",
+        "obligation_id": "",
+        "source_note": "合成历史采购，已包含在库存底账，不自动入库"
+      }
+    ],
+    "cash_entries": [
+      {
+        "id": "pay_demo",
+        "date": "2026-10-21",
+        "direction": "out",
+        "category": "purchase",
+        "amount": "500.00",
+        "external_ref": "SYN-PAY-001",
+        "purchase_id": "po_demo",
+        "source_note": "合成历史付款，已体现在现金底账"
+      }
+    ]
+  },
+  "customer_cohorts": [
+    {
+      "cohort_id": "cohort_aug_demo",
+      "label": "八月固定客群（合成）",
+      "definition": "八月购买过的固定100名去重客户；仅匿名汇总",
+      "baseline_start": "2026-08-01",
+      "baseline_end": "2026-08-31",
+      "base_size": 100,
+      "membership_confirmed": true,
+      "observation_complete": true,
+      "source_note": "人工编制的固定客群记录，不含个人ID，不代表真实流失",
+      "id": "cohort_sep",
+      "start": "2026-09-01",
+      "end": "2026-09-25",
+      "retained": 60
+    },
+    {
+      "cohort_id": "cohort_aug_demo",
+      "label": "八月固定客群（合成）",
+      "definition": "八月购买过的固定100名去重客户；仅匿名汇总",
+      "baseline_start": "2026-08-01",
+      "baseline_end": "2026-08-31",
+      "base_size": 100,
+      "membership_confirmed": true,
+      "observation_complete": true,
+      "source_note": "人工编制的固定客群记录，不含个人ID，不代表真实流失",
+      "id": "cohort_oct",
+      "start": "2026-10-01",
+      "end": "2026-10-25",
+      "retained": 40
+    }
+  ]
+}

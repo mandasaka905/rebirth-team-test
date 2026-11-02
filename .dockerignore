@@ -1,0 +1,17 @@
+**/__pycache__
+**/*.pyc
+**/*.sqlite3*
+**/*.db
+**/*.log
+.git
+.venv
+var
+team-delivery
+testing
+tests
+docs
+config.local.json
+config/*.local.json
+design-preview/qa
+design-preview/*.zip
+**/.env*
