@@ -38,6 +38,8 @@ def validate_models(raw):
         integer(m.get("weekly_hours"), "每周工时", 168)
         if type(m.get("costs_confirmed")) is not bool:
             raise ValidationError("费用确认必须为布尔值")
+        from .model_economics import validate as validate_unit_cost
+        validate_unit_cost(m)
         nonempty(m.get("demand_evidence"), "需求证据或明确写待核实")
     return raw
 

@@ -21,6 +21,10 @@ class ProviderError(RuntimeError):
     pass
 
 
+class ResponseFormatError(ProviderError):
+    pass
+
+
 def extract_action(payload):
     """Only accept a structured action or a JSON end-node response, not prose."""
     if isinstance(payload, dict) and payload.get("action") in ("tool", "final"):
@@ -38,13 +42,23 @@ def extract_action(payload):
                 continue
     if isinstance(payload, str):
         value = payload.strip()
-        if value.startswith("```json") and value.endswith("```"):
-            value = value[7:-3].strip()
+        if value.startswith("```") and value.endswith("```"):
+            first,sep,rest=value.partition('\n')
+            if sep and first.lower() in ('```json','```'):value=rest[:-3].strip()
         try:
             return extract_action(json.loads(value))
         except (json.JSONDecodeError, RecursionError):
             pass
-    raise ProviderError("未找到符合协议的JSON动作；请检查工作流结束节点输出映射")
+        # Some managed models prepend a short explanation. Accept only one
+        # complete action object at the end, never multiple or embedded actions.
+        start=value.find('{')
+        if 0<start<=1000 and not any(c in value[:start] for c in '{}[]`'):
+            try:
+                candidate,end=json.JSONDecoder().raw_decode(value[start:])
+                if not value[start+end:].strip() and isinstance(candidate,dict) and candidate.get('action') in ('tool','final'):
+                    return candidate
+            except (json.JSONDecodeError,RecursionError):pass
+    raise ResponseFormatError("云端未返回约定的JSON动作；请核对角色提示词或响应结构")
 
 
 def decode_response(raw, content_type):
@@ -89,18 +103,23 @@ class AgentArtsProvider:
     mode = "agentarts"
     handles_budget = True
 
-    def __init__(self, config_path, *, control=None):
+    def __init__(self, config_path, *, control=None, required_roles=None, instruction_override=None):
+        self.instruction_override = instruction_override
         self.control = control or RunControl()
         try:
             self.config = json.loads(Path(config_path).read_text(encoding="utf-8-sig"))
         except (OSError, ValueError) as exc:
             raise ProviderError("无法读取AgentArts本地配置") from exc
-        for role in ("coordinator", "inventory", "customer", "cash"):
+        for role in (required_roles if required_roles is not None else ("coordinator", "inventory", "customer", "cash")):
             cfg = self.config.get("agents", {}).get(role)
             if not cfg:
                 raise ProviderError(f"尚未配置{role}的AgentArts调用路径")
             parts = urllib.parse.urlsplit(cfg.get("url", ""))
-            if parts.scheme != "https" or not parts.hostname or parts.username or parts.password or parts.fragment or parts.query:
+            transport=cfg.get('transport','workflow_http')
+            if transport not in ('workflow_http','managed_ws'):
+                raise ProviderError('不支持的AgentArts接入方式')
+            scheme='wss' if transport=='managed_ws' else 'https'
+            if parts.scheme != scheme or not parts.hostname or parts.username or parts.password or parts.fragment or parts.query:
                 raise ProviderError("AgentArts调用路径必须是无账号密码的HTTPS URL")
             if parts.hostname not in self.config.get("allowed_hosts", []):
                 raise ProviderError("调用域名尚未加入本机allowed_hosts确认列表")
@@ -109,16 +128,99 @@ class AgentArtsProvider:
             if cfg.get("auth_header", "X-Auth-Token") not in ("Authorization", "X-Auth-Token"):
                 raise ProviderError("仅支持Authorization或X-Auth-Token认证头")
         self.sessions = {}
+        self.prefetch_readonly_evidence = self.config.get("prefetch_readonly_evidence", True) is True
 
     def step(self, context):
         cfg = self.config["agents"][context["role"]]
-        prompt = (ROOT / "agentarts" / "prompts" / f"{context['role']}.md").read_text(encoding="utf-8")
+        prompt = self.instruction_override or (ROOT / "agentarts" / "prompts" / f"{context['role']}.md").read_text(encoding="utf-8")
         contracts=json.loads((ROOT/"config/contracts.json").read_text(encoding="utf-8"))
-        envelope = {"instruction": prompt, "context": redact_context(context), "output_contract": {k:contracts[k] for k in ("model_draft_contract","model_review_contract","procurement_contract")}}
+        envelope = {"instruction": prompt, "context": redact_context(context), "output_contract": contracts,
+            "execution_protocol":"这是本地宿主驱动的单步协作协议。context.tools列出的业务工具由本地执行，不是云端内置工具。需要证据时只返回一个action=tool的JSON动作；下一次请求的observations携带真实结果。最终只返回一个action=final及result对象。禁止调用云端文件、命令、浏览器或创建计划。契约示例只说明结构，不得照抄示例商品、日期、证据ID或经营模式版本；实际值取自context。"}
+        envelope['stage_requirements']={
+            'phase':context.get('phase'),'remaining_steps':context.get('remaining_steps',8),
+            'fresh_tool_required':context.get('role') in ('inventory','customer','cash') and not any('value' in o for o in context.get('observations',[])),
+            'instructions':'每个阶段必须先取得本角色本阶段实际计算的业务工具结果，才可返回final；本阶段host_prefetch结果满足取证要求，不必为相同参数重复调用。own_memory仅供参考，不能替代本阶段的observations。若fresh_tool_required为true，本次只能输出tool动作，不能输出final。调查阶段按需取证，工具充分后结束，不机械遍历。只输出一个完整JSON对象。',
+            'concise_output':'调查阶段优先主工具和business_diagnostics，其他工具仅在缺少关键证据时使用。提案阶段每个角色最多一个小范围方案；客户角色可另外提出一个完整经营模式草案。解释写在notes或rationale，不重复长篇输入；资料完整时可为本角色方案提出一个有依据、待商户确认的实验草案，条件不足时保留为空。最多8步动作，本阶段已有6次工具结果时必须整理final。',
+            'primary_tool':{'inventory':'inventory_analyze','customer':'customer_evidence','cash':'cash_baseline'}.get(context.get('role'))}
+        candidates = context.get('proposals') or []
+        if not candidates and isinstance(context.get('ledger', {}).get('candidate_for_review'), dict):
+            candidates = [context['ledger']['candidate_for_review']]
+        envelope['stage_requirements']['proposal_scope'] = [
+            {'proposal_id': p.get('id'), 'version': p.get('version'),
+             'has_new_procurement': bool(p.get('procurements')),
+             'supplier_terms_required_for_this_plan': bool(p.get('procurements'))}
+            for p in candidates]
+        envelope['stage_requirements']['prefetched_evidence'] = 'observations中的host_prefetch结果由宿主对当前冻结底账实际计算，带本角色本阶段evidence_id；已满足的相同参数工具无需重复请求。仍须自行审查并给出结论；追加检索或不同参数可继续使用只读工具。'
+        envelope['stage_requirements']['cash_cost_rule'] = '已有现货采购款默认已付，unit_cost进入毛利，不复制到variable_cash_cost；variable_cash_cost仅为本次额外包装、平台等单件现金费用。若确有未付采购款，在obligations核实，不重复填入两处。未知费用不能编零或标记已核实。'
+        envelope['stage_requirements']['field_meanings'] = {
+            'items[].receipt_date': '销售回款日，不是采购到货日',
+            'items[].sale_date': '交付日；未填写时按工具规定的默认值计算',
+            'procurements': '新增采购安排；为空时本方案仅使用现货，不据此要求新增采购报价或起订量'}
+        envelope['stage_requirements']['instructions'] += (
+            ' 审查按当前方案范围展开。没有procurements的现货处理方案，不得仅因缺少供货报价、起订量或供货天数而判失败；'
+            'receipt_date只表示销售回款日，不能把它当成到货日或据此要求供应商证明。'
+            '已有库存数量、成本、未付采购欠款、顾客需求及回款依据仍须核对；'
+            '若建议新增采购，再核对相应供应条件。不要把与本次方案无关的资料变成必填。')
+        models=context.get('ledger',{}).get('business_models') or []
+        envelope['stage_requirements']['business_model_linkage'] = {
+            'existing_versions':[{'id':m['id'],'version':m.get('version',1)} for m in models],
+            'model_refs_required':bool(models),
+            'when_no_models':'允许model_refs=[]的现货等普通候选；不得编造模式版本，也不得把缺少模式档案作为所有方案的前置门槛。'}
+        envelope['stage_requirements']['instructions'] += (
+            ' 同一阶段需要多项只读资料时，优先用read_tools一次列出主工具、data_readiness和必要的方案计算；'
+            '每个子结果会获得独立真实evidence_id。已有资料充分后返回final，不重复读取。'
+            ' 没有business_models时，普通经营候选允许model_refs=[]；'
+            '已有模式时才引用其精确版本。新商业模式仍须另走草案审阅流程。'
+            '降低upfront_cost只是待验证假设；必须说明取消或缩减了哪些具体动作、费用依据和待确认项，'
+            '不能把改小金额本身说成降本已可行或经营收益已实现。')
+        envelope['stage_requirements']['expense_breakdown']={
+            'optional':True,'scope':'只分解upfront_cost+other_cost，不重复计入单件费用或采购',
+            'fields':['id','label','quantity','unit_cost','amount','basis','basis_kind'],
+            'basis_kind':['assumption','merchant_record'],
+            'rules':'数量乘单价等于小计，各项之和等于固定支出；假设费用的costs_confirmed必须false；记录说明并不证明报价真实。'}
+        envelope['stage_requirements']['knowledge_citations']={
+            'optional':'仅在实际检索资料并用于专业判断时填写assessment.knowledge_citations；未检索时省略或为空。',
+            'fields':['claim','document_id','supporting_text','evidence_id','scope_limit'],
+            'rules':'evidence_id必须是本阶段knowledge_search的真实记录；document_id须在matches中，supporting_text须摘自其content；scope_limit说明这份资料不能支持什么。程序只验证出处与摘录，语义支持仍须人工复核。'}
+        envelope['stage_requirements']['business_model_design']={
+            'comparison':'有明确现行模式时，可用business_model_compare比较1至4个模式草案，说明客群、渠道、履约或收入方式的变化；没有依据时保留补证，不强凑模式。',
+            'costs':'model.unit_cost_components可逐项记录商品、平台、包装、配送等每单费用，字段id、label、amount（未知用null）、basis、basis_kind（assumption或merchant_record）。分项与unit_cost一致；存在未知分项时unit_cost为null，假设不得标为已核实。',
+            'review':'比较工具不代替各角色对精确草案版本的model_draft_evaluate及model_reviews。不得把文字变化等同于商业创新，订单和收益均非预测。'}
+        if context.get('collaboration_protocol') == 2:
+            phase, role = context.get('phase'), context.get('role')
+            schema = contracts['collaboration_protocol_2']
+            final = {'notes': []}
+            if role == 'coordinator':
+                final.update(coordination_tasks=schema['coordination_tasks'], revise_roles=[])
+            else:
+                final['assessment'] = schema['assessment']
+                if phase == 'review': final.update(proposal_reviews=schema['proposal_reviews'], objections=[])
+                elif phase == 'revise': final.update(revision_responses=schema['revision_responses'], proposals=[])
+                elif phase == 'propose': final.update(proposals=[])
+                elif phase == 'investigate': final.update(findings=[])
+                if role=='customer' and phase in ('propose','revise'):final['model_drafts']=[]
+                if phase=='review' and context.get('model_drafts'):final['model_reviews']=[contracts['model_review_contract']]
+            # Keep the primary final example consistent with the enforced protocol.
+            envelope['output_contract']['final_action'] = {'action':'final', 'result':final}
+            envelope['stage_requirements']['current_evidence_ids'] = [o['evidence_id'] for o in context.get('observations', []) if 'value' in o]
+            observed = {o.get('tool') for o in context.get('observations', []) if 'value' in o}
+            if (phase == 'revise' and 'proposal_evaluate' in observed) or (phase == 'investigate' and 'data_readiness' in observed and envelope['stage_requirements']['primary_tool'] in observed):
+                envelope['stage_requirements']['next_action_hint'] = '必要取证已具备，优先返回完整final；直接引用current_evidence_ids，不重复调用相同工具。每条说明尽量80字内。'
+            envelope['stage_requirements']['required_result_fields'] = (
+                ['coordination_tasks', 'revise_roles'] if role == 'coordinator' else
+                ['assessment'] + (['proposal_reviews', 'objections'] if phase == 'review' else ['revision_responses'] if phase == 'revise' else []))
+            envelope['stage_requirements']['instructions'] += ' 协作协议2字段不可省略。调查必须先调用本角色主工具和data_readiness，按field_id覆盖本角色全部已知缺口；review逐个调用当前版本proposal_evaluate；协调必须逐项回应coordination_requirements。字段结构见collaboration_protocol_2。每条解释尽量控制在80字内。'
+        from .provider_contracts import clarify
+        clarify(envelope,context)
         token = os.environ[cfg.get("token_env", "AGENTARTS_TOKEN")]
         auth_header = cfg.get("auth_header", "X-Auth-Token")
         session_key = (context["run_id"], context["role"])
         session = self.sessions.setdefault(session_key, uuid4().hex)
+        if cfg.get('transport')=='managed_ws':
+            if auth_header!='Authorization':
+                raise ProviderError('Managed Agents需要Authorization认证')
+            from .managed_ws import invoke
+            return invoke(cfg['url'],token,uuid4().hex,envelope,self.control,observer=getattr(self,'frame_observer',None))
         request = urllib.request.Request(
             cfg["url"],
             data=json.dumps({"inputs": {"request": json.dumps(envelope, ensure_ascii=False)}}, ensure_ascii=False).encode("utf-8"),
@@ -171,6 +273,10 @@ class RuleProvider:
             d=rule_draft(c["ledger"],refs,prior)
             result["model_drafts"]=[d] if d else []
         if role in ("inventory","customer","cash") and phase=="review":
+            if c.get('collaboration_protocol') == 2:
+                for proposal in c.get('proposals', []):
+                    if not any(o.get('tool') == 'proposal_evaluate' and 'value' in o and o.get('arguments', {}).get('proposal', {}).get('id') == proposal['id'] for o in c['observations']):
+                        return {'action': 'tool', 'name': 'proposal_evaluate', 'arguments': {'proposal': proposal}}
             reviews=[]
             for d in c.get("model_drafts",[]):
                 obs=next((o for o in c["observations"] if o.get("tool")=="model_draft_evaluate" and o.get("arguments",{}).get("draft",{}).get("id")==d["id"] and "value" in o),None)
@@ -179,6 +285,9 @@ class RuleProvider:
                 reviews.append({"draft_id":d["id"],"version":d["version"],"status":"blocked" if v["blockers"] else "needs_data" if v["warnings"] else "pass",
                                 "reason":"；".join(v["perspectives"][role]),"evidence_ids":[obs["evidence_id"]]})
             result["model_reviews"]=reviews
+        if c.get('collaboration_protocol') == 2:
+            from .collaboration_protocol import rule_contract
+            rule_contract(c, result)
         return action
 
     def _base_step(self, c):
@@ -193,7 +302,7 @@ class RuleProvider:
             roles = sorted({o["owner"] for o in c.get("proposals", [])
                             if any(r["proposal_id"] == o["id"] and r["objections"] for r in c.get("reviews", []))})
             return {"action": "final", "result": {"revise_roles": roles,
-                "notes": ["本地规则仅用于协作协议与计算测试，不构成AI诊断或经营建议。"]}}
+                "notes": ["先核对未解决的问题，再决定是否尝试方案。"]}}
         if phase == "review":
             needed = [p for p in c["proposals"] if p["owner"] != role]
             already = {r["arguments"]["proposal"]["id"] for r in c["observations"] if r["tool"] == "proposal_evaluate" and "value" in r}
@@ -264,7 +373,7 @@ class RuleProvider:
                 "notes": [{"statement": "已完成账面筛查；观察与假设分开，不能据此推定经营原因。", "evidence_ids": refs}],
                 "findings": findings, "questions": own_questions, "historical_followups": followups, "proposals": []}}
         if role == "cash":
-            return {"action": "final", "result": {"notes": [{"statement": "现金约束单独维护，不为了凑角色强行生成商品方案。", "evidence_ids": refs}], "proposals": []}}
+            return {"action": "final", "result": {"notes": [{"statement": "先核对必要付款和备用金，再看是否有余力尝试。", "evidence_ids": refs}], "proposals": []}}
         for tool in ("inventory_analyze", "cash_baseline", "feedback_history"):
             if tool not in observed:
                 return {"action": "tool", "name": tool, "arguments": {}}
@@ -282,7 +391,7 @@ class RuleProvider:
             candidates = [p for p in candidates if p["slow_moving"]]
         if role == "customer" and not any("预约" in signal["observation"] for signal in ledger["customer_signals"]):
             return {"action": "final", "result": {"notes": [{
-                "statement": "本地规则只支持有预约反馈线索的试验模板；当前缺少相应证据，先调查真实需求。", "evidence_ids": refs}], "proposals": []}}
+                "statement": "缺少预约需求记录，先了解顾客是否愿意预约。", "evidence_ids": refs}], "proposals": []}}
         if not candidates:
             return {"action": "final", "result": {"notes": ["缺少可售且成本完整的商品，先补充资料"], "proposals": []}}
         budget = min(money(values["cash_baseline"]["conservative_budget_ceiling"]), money("500"))
@@ -310,7 +419,7 @@ class RuleProvider:
             return {"action": "tool", "name": "business_diagnostics", "arguments": {}}
         from .experiment_drafts import rule_draft
         draft = rule_draft(ledger, proposal, refs)
-        return {"action": "final", "result": {"notes": [{"statement": "待验证的规则测试提案", "evidence_ids": refs}], "proposals": [proposal], "experiment_drafts": [draft] if draft else []}}
+        return {"action": "final", "result": {"notes": [{"statement": "这个办法需要先小范围验证。", "evidence_ids": refs}], "proposals": [proposal], "experiment_drafts": [draft] if draft else []}}
 
 
 class SimulationProvider(RuleProvider):

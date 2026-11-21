@@ -12,6 +12,8 @@ tests
 docs
 config.local.json
 config/*.local.json
+config/*.local.txt
+.agentarts-deps
 design-preview/qa
 design-preview/*.zip
 **/.env*

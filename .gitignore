@@ -1,7 +1,9 @@
 __pycache__/
 *.pyc
-*.sqlite3*
-*.db
 .env*
-config.local.json
+*.local.*
 var/
+data/
+*.sqlite*
+.agentarts-deps/
+本机私密配置/

@@ -1,0 +1,9 @@
+{
+  "allowed_hosts": ["YOUR-CONSOLE-ENDPOINT"],
+  "agents": {
+    "coordinator": {"url": "https://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-COORDINATOR-RUNTIME/invocations", "auth_header": "Authorization", "token_env": "AGENTARTS_TOKEN"},
+    "inventory": {"url": "https://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-INVENTORY-RUNTIME/invocations", "auth_header": "Authorization", "token_env": "AGENTARTS_TOKEN"},
+    "customer": {"url": "https://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-CUSTOMER-RUNTIME/invocations", "auth_header": "Authorization", "token_env": "AGENTARTS_TOKEN"},
+    "cash": {"url": "https://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-CASH-RUNTIME/invocations", "auth_header": "Authorization", "token_env": "AGENTARTS_TOKEN"}
+  }
+}

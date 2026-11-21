@@ -1,0 +1,2 @@
+# Optional; only needed when explicitly enabling Managed Agents calls.
+websockets==15.0.1

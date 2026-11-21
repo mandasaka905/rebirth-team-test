@@ -8,19 +8,31 @@ from .domain import ValidationError, day, identifier, integer, money, nonempty, 
 TEMPLATES={
  "inventory":"sku,name,stock,sales_30d,received_on,unit_cost,unit_price,size_complete,source_note\n",
  "sales":"id,date,sku,quantity,revenue,goods_cost,source_note\n"}
+CHINESE_TEMPLATES={
+ 'inventory':'商品编号,商品名称,库存数量,近30天销量,入库日期,采购单价,销售单价,尺码齐全,来源说明\n',
+ 'sales':'单号,日期,商品编号,销售数量,销售额,商品成本,来源说明\n'}
+COLUMN_ALIASES={
+ 'inventory':dict(zip(CHINESE_TEMPLATES['inventory'].strip().split(','),TEMPLATES['inventory'].strip().split(','))),
+ 'sales':dict(zip(CHINESE_TEMPLATES['sales'].strip().split(','),TEMPLATES['sales'].strip().split(',')))}
+
 
 def digest(value):
     return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False).encode()).hexdigest()
 
-def parse(text,kind):
+def parse(text,kind,default_source=None):
     if kind not in TEMPLATES or not isinstance(text,str) or len(text)>500000:raise ValidationError("请选择库存或销售CSV，最多50万字")
     r=csv.DictReader(StringIO(text.lstrip('\ufeff')))
     expected=TEMPLATES[kind].strip().split(',')
-    if not r.fieldnames or len(r.fieldnames)!=len(set(r.fieldnames)) or set(r.fieldnames)!=set(expected):raise ValidationError("CSV列名须为："+','.join(expected))
+    if r.fieldnames:r.fieldnames=[COLUMN_ALIASES[kind].get(x.strip(),x.strip()) for x in r.fieldnames]
+    allowed=[set(expected)]
+    if isinstance(default_source,str) and default_source.strip():allowed.append(set(expected)-{'source_note'})
+    if not r.fieldnames or len(r.fieldnames)!=len(set(r.fieldnames)) or set(r.fieldnames) not in allowed:
+        raise ValidationError('表格列名不匹配，请下载本页模板填写；支持中文列名和英文列名')
     rows=[]
     for line,row in enumerate(r,2):
         if None in row or any(v is None for v in row.values()):raise ValidationError("CSV第"+str(line)+"行列数错误")
         row={k:v.strip() for k,v in row.items()}
+        if not row.get('source_note') and isinstance(default_source,str):row['source_note']=default_source.strip()
         try:
             for k in (("stock","sales_30d") if kind=="inventory" else ("quantity",)):
                 if not row[k].isdigit():raise ValidationError(k+"须为非负整数")
@@ -30,8 +42,9 @@ def parse(text,kind):
                 else:money(row[k])
             if kind=="sales" and row["revenue"] is None:raise ValidationError("销售额不能留空，商品成本未知可以留空")
             if kind=="inventory":
-                if row["size_complete"].lower() not in ('true','false',''):raise ValidationError("尺码状态只接受true、false或空白")
-                row["size_complete"]={'true':True,'false':False,'':None}[row["size_complete"].lower()]
+                states={'true':True,'false':False,'':None,'是':True,'齐全':True,'否':False,'缺码':False,'待核实':None}
+                if row['size_complete'].lower() not in states:raise ValidationError('尺码齐全请填是、否或留空')
+                row['size_complete']=states[row['size_complete'].lower()]
             nonempty(row["source_note"],"逐行来源");identifier(row["sku"])
         except ValidationError as e:raise ValidationError("CSV第"+str(line)+"行："+str(e)) from None
         rows.append(row)
@@ -86,7 +99,7 @@ def row_source(updated,batch_source,sku,notes):
 
 def preview(ledger,raw):
     if not isinstance(raw,dict):raise ValidationError("导入请求须为对象")
-    kind=raw.get("kind");rows=parse(raw.get("csv"),kind)
+    kind=raw.get("kind");rows=parse(raw.get("csv"),kind,default_source=raw.get("source_note"))
     nonempty(raw.get("source_note"),"本批来源")
     for k in ("replace_existing","confirm_sales_window"):
         if type(raw.get(k,False)) is not bool:raise ValidationError(k+"须为布尔值")

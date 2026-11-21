@@ -156,7 +156,7 @@ def validate_ledger(raw):
     return data
 
 
-def validate_proposal(raw):
+def validate_proposal(raw, *, require_evidence=True):
     if not isinstance(raw, dict):
         raise ValidationError("方案必须为对象")
     p = deepcopy(raw)
@@ -178,6 +178,8 @@ def validate_proposal(raw):
             raise ValidationError("销售假设标记无效")
         if type(p["costs_confirmed"]) is not bool:
             raise ValidationError("必须明确费用是否已经核实")
+        from .expense_basis import validate as validate_expense_basis
+        validate_expense_basis(p)
         if not isinstance(p["items"], list):
             raise ValidationError("items必须是列表")
         seen = set()
@@ -195,7 +197,7 @@ def validate_proposal(raw):
         for item in p["items"]:
             if "sale_date" in item: day(item["sale_date"])
         nonempty(p["rationale"], "提案依据")
-        if not isinstance(p["evidence_ids"], list) or not p["evidence_ids"]:
+        if require_evidence and (not isinstance(p.get("evidence_ids"), list) or not p.get("evidence_ids")):
             raise ValidationError("方案必须引用证据")
         if not isinstance(p["assumptions"], list) or not isinstance(p["stop_conditions"], list):
             raise ValidationError("方案必须提供假设和停止条件列表")

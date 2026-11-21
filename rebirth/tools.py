@@ -51,7 +51,10 @@ def cash_baseline(ledger, args):
 
 
 def evaluate(ledger, args):
-    p = validate_proposal(args["proposal"])
+    # A merchant's unreviewed candidate can be calculated before it has agent
+    # evidence. The returned calculation becomes evidence; final proposals still
+    # pass the strict validator and must cite real run-owned tool event IDs.
+    p = validate_proposal(args["proposal"], require_evidence=False)
     products = {x["sku"]: x for x in ledger["products"]}
     start = day(ledger["as_of"])
     end = start + timedelta(days=30)
@@ -161,6 +164,7 @@ def evaluate(ledger, args):
     return {"proposal_id": p["id"], "checks": issues, "unknowns": list(dict.fromkeys(unknowns)),
             "constraint_pass": not issues, "eligible_for_merchant_review": not issues and not unknowns,
             "declared_revenue": amount(revenue), "known_stock_cost": amount(known_cost),
+            "cash_cost_breakdown": {"upfront_extra":amount(upfront),"variable_extra":amount(variable),"new_procurement":amount(procurement_cost),"sold_goods_cost":amount(known_cost),"notice":"已付现货成本仅进入毛利，不重复计为新增现金支出；未付货款另录必要付款。"},
             "gross_profit_after_declared_trial_costs": None if not supply["costs_complete"] or any("采购成本缺失" in x for x in unknowns) else amount(revenue-known_cost-upfront-variable-sum((money(l["shipping_cost"]) for l in supply["lines"] if l["shipping_cost"] is not None), ZERO)),
             "incremental_cash_under_declared_sales": amount(revenue-committed_cost),
             "trial_cash_commitment": amount(committed_cost) if supply["costs_complete"] else None, "scenarios": daily,
@@ -182,6 +186,7 @@ TOOL_ARGS = {
     "data_readiness": {}, "feedback_history": {},
     "business_diagnostics": {}, "knowledge_search": {"query": "本地资料检索词，最多200字"},
     "supply_analyze": {}, "model_draft_evaluate": {"draft":"完整模式草案"},
+    "business_model_compare": {"baseline_ref":{"id":"现行模式编号","version":1},"drafts":"1至4个完整模式草案","scope":"声明相同商品、每单口径及范围，仍待商户核对"},
     "investigation_history": {}, "business_model_assess": {}, "accounts_reconcile": {}, "customer_retention": {},
 }
 
@@ -195,6 +200,9 @@ def dispatch(ledger, name, args, *, history=(), knowledge=(), investigations=(),
     if name == "model_draft_evaluate":
         from .model_drafts import assess_draft
         return assess_draft(ledger, args.get("draft"))
+    if name == "business_model_compare":
+        from .model_comparison import compare
+        return compare(ledger,args)
     if name == "customer_retention":
         from .cohorts import analyze_cohorts
         return analyze_cohorts(ledger)

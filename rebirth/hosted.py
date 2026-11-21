@@ -8,7 +8,7 @@ from http.cookies import SimpleCookie, CookieError
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 from threading import Lock
-from urllib.parse import urlsplit, quote
+from urllib.parse import urlsplit, quote, parse_qs
 
 from .accounts import Accounts
 from .server import make_handler, ROOT
@@ -16,7 +16,7 @@ from .store import Store
 
 
 class Gateway:
-    def __init__(self, data_dir, origin, *, local_preview=False, registration_open=False, registration_limit=30, demo_only=False):
+    def __init__(self, data_dir, origin, *, local_preview=False, registration_open=False, registration_limit=30, demo_only=False, config_path=None, allow_cloud=False, first_admin=False, seed_examples=False):
         parsed = urlsplit(origin)
         if parsed.path or parsed.query or parsed.fragment or parsed.username or parsed.password:
             raise ValueError('正式网址只能包含协议、域名和可选端口，不带路径')
@@ -33,23 +33,29 @@ class Gateway:
         self.registration_open=registration_open
         self.registration_limit=registration_limit
         self.demo_only=demo_only
+        self.allow_cloud=bool(allow_cloud)
+        self.first_admin=bool(first_admin)
+        self.seed_examples=bool(seed_examples)
         self.cookie_name = '__Host-rebirth' if self.secure else 'rebirth_preview'
         self.accounts = Accounts(data_dir)
+        from .merchant_network import Community
+        self.community = Community(self.accounts)
         self.handlers, self.lock = {}, Lock()
-        self.config = ROOT/'config/hosted-no-cloud.json'
+        self.config = Path(config_path) if config_path else ROOT/'config/hosted-no-cloud.json'
 
     def tenant(self, uid):
         with self.lock:
             if uid not in self.handlers:
                 # Account IDs are random, server-generated hex. No incoming path is used here.
                 assert re.fullmatch('[a-f0-9]{32}', uid)
-                if self.demo_only:
+                if self.demo_only or self.seed_examples:
                     from .onboarding import PracticeStore,seed_practice
-                    store=PracticeStore(self.accounts.folder/'shops'/uid/'business.sqlite3')
+                    store=(PracticeStore if self.demo_only else Store)(self.accounts.folder/'shops'/uid/'business.sqlite3')
                     seed_practice(store,ROOT)
                 else:
                     store = Store(self.accounts.folder/'shops'/uid/'business.sqlite3')
-                self.handlers[uid] = make_handler(store, self.config, allow_cloud=False)
+                store.interrupt_orphaned_runs()
+                self.handlers[uid] = make_handler(store, self.config, allow_cloud=self.allow_cloud)
             return self.handlers[uid]
 
     def handler(self):
@@ -120,17 +126,19 @@ class Gateway:
                 for name in ['summer-street.png','summer-street-mobile.png','shop-interior-v1.png','tree-shadow.svg','wordmark.svg']:
                     if path=='/preview-assets/'+name:
                         self.static_bytes((ROOT/'design-preview/dist/assets'/name).read_bytes(),'image/svg+xml' if name.endswith('.svg') else 'image/png');return True
-                if path in ['/login','/register','/account','/auth.js','/auth.css','/auth-client.js']:
-                    name={'/login':'login.html','/register':'register.html','/account':'account.html'}.get(path,path[1:])
+                if path in ['/login','/register','/account','/auth.js','/auth.css','/auth-client.js','/admin','/admin.js','/community','/network.js']:
+                    name={'/login':'login.html','/register':'register.html','/account':'account.html','/admin':'admin.html','/community':'community.html'}.get(path,path[1:])
                     mime='text/javascript; charset=utf-8' if name.endswith('.js') else 'text/css; charset=utf-8' if name.endswith('.css') else 'text/html; charset=utf-8'
                     self.static_bytes((ROOT/'dist'/name).read_bytes(),mime);return True
                 if path=='/workbench':
                     user=gateway.accounts.user(self.token())
-                    if not user:self.redirect('/login');return True
+                    if not user:
+                        first_setup=gateway.first_admin and gateway.registration_open and not gateway.accounts.list_users()
+                        self.redirect('/register' if first_setup else '/login');return True
                     html=(ROOT/'dist/index.html').read_text(encoding='utf-8-sig')
                     html=html.replace('</head>','<link rel="stylesheet" href="/desk-theme.css"><link rel="stylesheet" href="/auth.css"><script src="/desk-theme.js" defer></script></head>')
                     # This script must run before application initialization, including the first API call.
-                    html=html.replace('<script src="/core.js"',f'<meta name="rebirth-account-id" content="{user["id"]}"><meta name="rebirth-demo-only" content="{str(gateway.demo_only).lower()}"><script src="/auth-client.js" defer></script><script src="/core.js"')
+                    html=html.replace('<script src="/core.js"',f'<meta name="rebirth-account-id" content="{user["id"]}"><meta name="rebirth-cloud-enabled" content="{str(gateway.allow_cloud).lower()}"><meta name="rebirth-demo-only" content="{str(gateway.demo_only).lower()}"><script src="/auth-client.js" defer></script><script src="/core.js"')
                     self.static_bytes(html.encode(),'text/html; charset=utf-8');return True
                 if path.endswith('.js') and path in {'/'+p.name for p in (ROOT/'dist').glob('*.js')}:
                     self.static_bytes((ROOT/'dist'/path[1:]).read_bytes(),'text/javascript; charset=utf-8');return True
@@ -148,12 +156,28 @@ class Gateway:
                 if not self.safe_local():return
                 path=urlsplit(self.path).path
                 if path=='/api/public-settings':
-                    self.reply(200,{'registration_open':gateway.registration_open,'demo_only':gateway.demo_only});return
+                    self.reply(200,{'registration_open':gateway.registration_open,'demo_only':gateway.demo_only,'setup_required':gateway.first_admin and not gateway.accounts.list_users()});return
                 if path=='/api/session':
                     user=gateway.accounts.user(self.token())
                     self.reply(200 if user else 401,{'user':user,'error':None if user else '请先登录'});return
-                if path=='/health':self.reply(200,{'status':'ok','cloud_connected':False});return
-                if path=='/account' and not gateway.accounts.user(self.token()):self.redirect('/login');return
+                if path=='/api/admin/users':
+                    user=self.authenticated()
+                    if user:
+                        if user['role']!='admin':self.reply(403,{'error':'只有管理员可以管理账号'})
+                        else:self.reply(200,{'users':gateway.accounts.list_users()})
+                    return
+                if path=='/admin':
+                    user=gateway.accounts.user(self.token())
+                    if not user:self.redirect('/login');return
+                    if user['role']!='admin':self.reply(403,{'error':'只有管理员可以管理账号'});return
+                if path=='/health':self.reply(200,{'status':'ok','cloud_configured':gateway.allow_cloud,'cloud_connected':False});return
+                if path in ('/account','/community') and not gateway.accounts.user(self.token()):self.redirect('/login');return
+                if path=='/api/community':
+                    user=self.authenticated()
+                    if user:
+                        try:self.reply(200,gateway.community.get(user,parse_qs(urlsplit(self.path).query)))
+                        except ValueError as exc:self.reply(400,{'error':str(exc)})
+                    return
                 if path.startswith('/api/'):
                     user=self.authenticated()
                     if user:gateway.tenant(user['id']).do_GET(self)
@@ -184,7 +208,7 @@ class Gateway:
                         if gateway.demo_only and body.get('test_consent') is not True:
                             self.reply(400,{'error':'请确认测试期间只使用虚构资料'});return
                         try:
-                            uid=gateway.accounts.register(name,password,self.client_address[0],limit=gateway.registration_limit)
+                            uid=gateway.accounts.register(name,password,self.client_address[0],limit=gateway.registration_limit,first_admin=gateway.first_admin)
                             gateway.tenant(uid)
                         except ValueError as exc:
                             message=str(exc);self.reply(429 if '尝试较多' in message else 400,{'error':message});return
@@ -193,7 +217,38 @@ class Gateway:
                     gateway.accounts.logout(self.token())
                     self.auth_reply(200,{'ok':True},self.cookie(token));return
                 user=self.authenticated()
-                if user:gateway.tenant(user['id']).do_POST(self)
+                if not user:return
+                if path=='/api/community':
+                    try:
+                        if self.headers.get('Content-Type','').split(';')[0]!='application/json':raise ValueError('提交格式不正确')
+                        length=int(self.headers.get('Content-Length','0'))
+                        if not 0<length<=320000:raise ValueError('提交内容过大')
+                        body=json.loads(self.rfile.read(length))
+                        if not isinstance(body,dict):raise ValueError('提交内容不正确')
+                        self.reply(200,gateway.community.post(user,body))
+                    except (ValueError,TypeError) as exc:self.reply(400,{'error':str(exc)})
+                    return
+                if path in ['/api/account/password','/api/admin/status']:
+                    try:
+                        if self.headers.get('Content-Type','').split(';')[0]!='application/json':raise ValueError('提交格式不正确')
+                        length=int(self.headers.get('Content-Length','0'))
+                        if not 0<length<=4096:raise ValueError('提交内容过大')
+                        body=json.loads(self.rfile.read(length))
+                        if not isinstance(body,dict):raise ValueError('提交内容不正确')
+                        if path=='/api/account/password':
+                            if body.get('password')!=body.get('password_confirm'):raise ValueError('两次新密码不一致')
+                            gateway.accounts.change_password(user['id'],body.get('current'),body.get('password'))
+                            self.auth_reply(200,{'ok':True},self.cookie(expired=True))
+                        else:
+                            if user['role']!='admin':self.reply(403,{'error':'只有管理员可以管理账号'});return
+                            gateway.accounts.set_disabled(user['id'],body.get('id'),body.get('disabled'))
+                            self.reply(200,{'ok':True})
+                    except (ValueError,TypeError,KeyError) as exc:
+                        message=str(exc)
+                        allowed=('当前密码不正确','两次新密码不一致','请选择启用或停用','账号不存在','管理员账号不能在这里停用','只有管理员可以管理账号','密码请用12至256个字符，可包含空格或中文')
+                        self.reply(400,{'error':message if message in allowed else '提交内容不正确，请检查后重试'})
+                    return
+                gateway.tenant(user['id']).do_POST(self)
         return Handler
 
     def wsgi(self):
@@ -275,3 +330,4 @@ def main():
 
 
 if __name__=='__main__':main()
+

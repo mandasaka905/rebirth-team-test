@@ -244,6 +244,17 @@ class Store(SocialWorkflows, CommunityWorkflows, AgendaWorkflows, CompletionWork
             db.execute("UPDATE runs SET status=?, result=? WHERE id=? AND merchant=?",
                        (result["status"], dumps(result), run, merchant))
 
+    def interrupt_orphaned_runs(self):
+        """Called once when a hosted tenant is first opened by a new server process."""
+        with self.connect() as db:
+            rows = db.execute("SELECT id,merchant FROM runs WHERE status='running'").fetchall()
+            for row in rows:
+                result = {"status": "interrupted", "error_message": "服务进程已重新启动，分析未完成；已完成步骤保留，可确认后继续。"}
+                db.execute("UPDATE runs SET status='interrupted',result=? WHERE id=? AND status='running'", (dumps(result),row["id"]))
+                db.execute("INSERT INTO events(run,merchant,actor,kind,data,created_at) VALUES(?,?,?,?,?,?)",
+                    (row["id"],row["merchant"],"host","run_interrupted",dumps({"reason":"server_restarted"}),datetime.now(timezone.utc).isoformat()))
+        return len(rows)
+
     def result(self, merchant, run):
         row = self.check(merchant, run)
         snapshot = json.loads(row["snapshot"])

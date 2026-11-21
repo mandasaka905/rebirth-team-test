@@ -1,2 +1,3 @@
-# Separate dependency for the explicitly enabled hosted server; desktop kits remain stdlib-only.
+# Dependencies for the account-based server and validated avatar images.
 waitress==3.0.2
+Pillow>=12.0,<13

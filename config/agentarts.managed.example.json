@@ -1,0 +1,9 @@
+{
+  "allowed_hosts": ["YOUR-CONSOLE-ENDPOINT"],
+  "agents": {
+    "coordinator": {"transport":"managed_ws","url":"wss://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-COORDINATOR-RUNTIME/ws","auth_header":"Authorization","token_env":"AGENTARTS_COORDINATOR_KEY"},
+    "inventory": {"transport":"managed_ws","url":"wss://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-INVENTORY-RUNTIME/ws","auth_header":"Authorization","token_env":"AGENTARTS_INVENTORY_KEY"},
+    "customer": {"transport":"managed_ws","url":"wss://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-CUSTOMER-RUNTIME/ws","auth_header":"Authorization","token_env":"AGENTARTS_CUSTOMER_KEY"},
+    "cash": {"transport":"managed_ws","url":"wss://YOUR-CONSOLE-ENDPOINT/runtimes/YOUR-CASH-RUNTIME/ws","auth_header":"Authorization","token_env":"AGENTARTS_CASH_KEY"}
+  }
+}

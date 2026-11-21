@@ -16,8 +16,8 @@ def get_route(handler, parts, store, jobs, config_path, allow_cloud):
     elif parts == ["api", "planning-example"]:
         handler.reply(200, json.loads((Path(__file__).resolve().parent.parent/"examples/planning.synthetic.json").read_text(encoding="utf-8")))
     elif parts == ["api", "operating-templates"]:
-        from .operating_imports import TEMPLATES
-        handler.reply(200, {"templates":TEMPLATES})
+        from .operating_imports import TEMPLATES, CHINESE_TEMPLATES
+        handler.reply(200, {"templates":TEMPLATES,"chinese_templates":CHINESE_TEMPLATES})
     elif parts == ["api", "strategies"]:
         handler.reply(200, {"strategies": STRATEGIES})
     elif len(parts) >= 4 and parts[:2] == ["api", "merchants"]:

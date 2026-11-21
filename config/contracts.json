@@ -3,7 +3,7 @@
   "protocol": "Local host dispatches tools and validates every final result. Never invent evidence ids.",
   "tool_action": {
     "action": "tool",
-    "name": "inventory_analyze|customer_evidence|cash_baseline|proposal_evaluate|data_readiness|feedback_history|business_diagnostics|knowledge_search|investigation_history|business_model_assess|accounts_reconcile|customer_retention",
+    "name": "inventory_analyze|customer_evidence|cash_baseline|proposal_evaluate|data_readiness|feedback_history|business_diagnostics|knowledge_search|investigation_history|business_model_assess|accounts_reconcile|customer_retention|business_model_compare",
     "arguments": {}
   },
   "final_action": {
@@ -215,5 +215,81 @@
       "sale_date": "交付日，缺省为receipt_date；允许明示预收款但到交付日必须有足够商品"
     },
     "notice": "供应天数、费用、起订和能力由底账确定，不由模型随意填写；无自动下单；组合保留原运费计费批次，不默认合单优惠；到期销量需先通过data_readiness重新核对"
+  },
+  "collaboration_protocol_2": {
+    "assessment": {
+      "perspective": "inventory|customer|cash",
+      "conclusion": "专业判断",
+      "evidence_ids": [
+        "本角色本阶段工具编号"
+      ],
+      "assumptions": [
+        "明确假设"
+      ],
+      "limits": [
+        "不能推出的结论"
+      ],
+      "missing_data": [
+        {
+          "owner": "cash",
+          "question": "需要商户补充什么",
+          "why_needed": "影响什么判断",
+          "completion_condition": "如何核对完成",
+          "evidence_ids": [
+            "本阶段工具编号"
+          ],
+          "field_id": "data_readiness对应的本角色问题id；新增调查问题可自定义"
+        }
+      ]
+    },
+    "proposal_reviews": [
+      {
+        "proposal_id": "精确方案编号",
+        "version": 1,
+        "status": "pass|needs_data|blocked",
+        "reason": "本角色审查理由",
+        "evidence_ids": [
+          "该版本proposal_evaluate工具编号"
+        ],
+        "responses": [
+          {
+            "objection_id": "上轮本角色质询编号",
+            "outcome": "resolved|retained|needs_data",
+            "reason": "本次为何解除或保留",
+            "evidence_ids": [
+              "本阶段工具编号"
+            ]
+          }
+        ]
+      }
+    ],
+    "objection_additional_fields": {
+      "topic": "inventory|demand|cash|data",
+      "severity": "blocking|needs_data",
+      "acceptance": "可检查的解除条件"
+    },
+    "coordination_tasks": [
+      {
+        "requirement_id": "coordination_requirements中的编号",
+        "assignee": "inventory|customer|cash",
+        "disposition": "revise|ask_merchant|retain_unresolved",
+        "action": "具体工作",
+        "acceptance": "怎样算完成"
+      }
+    ],
+    "revision_responses": [
+      {
+        "proposal_id": "本角色原方案编号",
+        "previous_version": 1,
+        "status": "modified|needs_data|unresolved",
+        "reason": "处理说明",
+        "requirement_ids": [
+          "本角色该方案任务编号"
+        ],
+        "evidence_ids": [
+          "本阶段工具编号"
+        ]
+      }
+    ]
   }
 }

@@ -25,7 +25,9 @@ def inspect_config(path, allow_cloud=False):
         url = str(entry.get("url", ""))
         try:
             parsed = urlsplit(url)
-            valid = parsed.scheme == "https" and bool(parsed.hostname) and not any((parsed.username, parsed.password, parsed.query, parsed.fragment)) and "YOUR" not in url.upper()
+            transport=entry.get('transport','workflow_http')
+            scheme='wss' if transport=='managed_ws' else 'https'
+            valid = transport in ('workflow_http','managed_ws') and parsed.scheme == scheme and bool(parsed.hostname) and not any((parsed.username, parsed.password, parsed.query, parsed.fragment)) and "YOUR" not in url.upper()
             host = parsed.hostname if valid else None
         except ValueError:
             valid, host = False, None
@@ -56,7 +58,7 @@ def redact_context(context):
             return [clean(v) for v in obj]
         if isinstance(obj, str):
             if key == "name" and obj == name:
-                return "匿名服装零售店"
+                return "匿名实体小店"
             if key == "merchant_id":
                 return "merchant_" + hashlib.sha256(merchant.encode()).hexdigest()[:16]
             text = obj.replace(name, "匿名店铺") if name else obj

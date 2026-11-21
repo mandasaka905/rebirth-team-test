@@ -107,6 +107,10 @@ def parse_csv(text, kind):
     fields = {"cash_entries": ["id", "date", "direction", "category", "amount", "external_ref", "purchase_id", "source_note"],
               "purchases": ["id", "date", "sku", "quantity", "unit_cost", "other_cost", "due_date", "supplier", "external_ref", "obligation_id", "source_note"]}[kind]
     reader = csv.DictReader(StringIO(text.lstrip("\ufeff")))
+    chinese={"cash_entries":["记录编号","日期","收支方向","款项类型","金额","原始单据号","关联采购编号","来源说明"],
+             "purchases":["采购编号","日期","商品编号","数量","采购单价","其他成本","付款到期日","供应方","原始单据号","关联待付款编号","来源说明"]}[kind]
+    aliases=dict(zip(chinese,fields))
+    if reader.fieldnames:reader.fieldnames=[aliases.get(x.strip(),x.strip()) for x in reader.fieldnames]
     if not reader.fieldnames or len(set(reader.fieldnames)) != len(reader.fieldnames) or set(reader.fieldnames) != set(fields):
         raise ValidationError("CSV列名须完整且不重复："+",".join(fields))
     rows = []
@@ -114,6 +118,9 @@ def parse_csv(text, kind):
         if None in row or any(v is None for v in row.values()):
             raise ValidationError("CSV第"+str(line)+"行列数不一致")
         row = {k: v.strip() for k, v in row.items()}
+        if kind=='cash_entries':
+            row['direction']={'收入':'in','支出':'out'}.get(row['direction'],row['direction'])
+            row['category']={'销售':'sale','退款':'refund','采购':'purchase','房租':'rent','其他':'other','店主往来':'owner','借还款':'loan'}.get(row['category'],row['category'])
         if kind == "purchases":
             try:
                 row["quantity"] = int(row["quantity"])

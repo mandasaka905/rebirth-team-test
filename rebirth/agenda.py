@@ -46,7 +46,7 @@ class AgendaWorkflows:
         if report["status"] not in ("rehearsal_only","needs_data","awaiting_merchant_choice","unresolved") or not report.get("result"):raise ValidationError("先完成一次经营核查，再整理总结")
         if report["ledger_changed"] or report["context_changed"]:raise ValidationError("分析依据已更新，请重新核查，不能拿旧结论生成新日程")
         l=self.ledger(merchant);start=day(raw.get("start_date"));horizon=raw.get("days",7);daily=raw.get("daily_minutes",30)
-        if type(horizon) is not int or horizon not in (7,14):raise ValidationError("首版行动日程支持7或14天")
+        if type(horizon) is not int or horizon not in (7,14):raise ValidationError("行动日程支持7或14天")
         integer(daily,"每日额外投入分钟",180)
         if daily<10:raise ValidationError("每日至少留出10分钟用于核对与复盘")
         if start<day(l["as_of"]):raise ValidationError("日程不能早于所用底账日期")
@@ -66,12 +66,14 @@ class AgendaWorkflows:
             "goal":l["goal"],"cash":l["cash_balance"],"reserve_floor":l["reserve_floor"],"trial_budget":l["max_trial_budget"],"as_of":l["as_of"],
             "findings":facts[:6],"questions":[q["question"] for q in issues[:6]],"gates":gates,
             "chosen_plan":entry["proposal"]["title"] if entry else "先核实，不新增投入",
-            "source":"本地事实整理与约束排程；未调用大模型。" if report["mode"]!="agentarts" else "归纳已有云任务结果；日程仍由本地约束排程核对。",
-            "not_inferred":"不推测销量、收入或改善效果，不把原因假设当成已证实的结论。"}
+            "source":"依据：规则核查结果，已核对预算与用时。" if report["mode"]!="agentarts" else "依据：华为 AgentArts 分析结果，已核对预算与用时。",
+            "not_inferred":"销量与收益需以实际经营记录核实。"}
         tasks=[];backlog=[];day_use=[0]*horizon;week_use=[0]*((horizon+6)//7);placed={}
+        from .action_basis import basis, merchant_followups
         def task(tid,title,steps,output,role="coordinator",minutes=15,depends=(),fixed=None,kind="preparation",cap="0.00",link="ledger",not_before=0):
             t={"id":tid,"title":title,"steps":steps,"deliverable":output,"review_role":role,"owner":"店主","minutes":min(minutes,daily),"depends_on":list(depends),"kind":kind,"spend_cap":cap,"view":link,
                "stop_when":"发现来源不符、金额不清或前置任务未完成，先暂停并补证。","status":"pending","note":""}
+            t['basis']=basis(report,entry,role)
             earliest=max([placed.get(d,-1) for d in depends]+[not_before]);slots=[(day(fixed)-start).days] if fixed else range(earliest,horizon)
             for slot in slots:
                 if any(d not in placed for d in depends) or not 0<=slot<horizon or slot<earliest:continue
@@ -85,12 +87,25 @@ class AgendaWorkflows:
         names="、".join(p["name"] for p in l["products"][:3]) or "本店已登记商品"
         task("check_stock","从货架上找回占住的钱",["先盘点："+names+"。","逐项核对实物数量、采购成本与近30天销售记录，记录差异与来源。","只写观察；不要看到积压就立刻降价或补货。"],"一份能回到采购单和盘点记录的差异清单。",role="inventory",depends=("check_cash",),not_before=1)
         task("check_demand","听懂顾客上一次没买的原因",["整理已获得授权的客户反馈，记录原话、时间与场景。","区分问询、预约与实际付款；没有证据时明确写待核实。","只保留经营所需匿名观察，不收集无关个人信息。"],"至少一条可核查的客户观察，或明确记录暂无线索。",role="customer",depends=("check_stock",),not_before=2)
+        preparation=['check_demand']
+        if entry and entry['proposal'].get('expense_breakdown'):
+            rows=entry['proposal']['expense_breakdown']
+            details=[f"{r['label']}：{r['quantity']} × ¥{r['unit_cost']} = ¥{r['amount']}；依据：{r['basis']}。" for r in rows]
+            task('check_costs','逐项核对这次准备花的钱',details+['把假设与已有记录分开，取得实际报价或费用记录后回原方案更正；本任务不授权采购或付款。'],
+                 '每项费用对应的报价、记录日期和来源；缺失项明确留待核实。',role='cash',depends=('check_demand',),not_before=3)
+            preparation.append('check_costs')
         if gates:
-            task("resolve_gates","把卡住的条件一项项补齐",gates+["在原资料与方案中更正，再重新核查、生成新版日程。"],"已补证项与仍未解决项分别列出。",depends=("check_demand",),link="analysis",not_before=3)
+            for i,followup in enumerate(merchant_followups(report,entry)):
+                tid='followup_'+str(i)
+                task(tid,'补充一项方案判断所需资料',[followup['action']],followup['acceptance'],role=followup['assignee'],depends=('check_demand',),not_before=3)
+                target=next((t for t in tasks+backlog if t['id']==tid),None)
+                target['basis']['coordination_ref']={k:followup[k] for k in ('event_id','requirement_id','proposal_id','proposal_version')}
+                preparation.append(tid)
+            task("resolve_gates","把卡住的条件一项项补齐",gates+["在原资料与方案中更正，再重新核查、生成新版日程。"],"已补证项与仍未解决项分别列出。",depends=tuple(preparation),link="analysis",not_before=3)
             task("review","回到桌前，决定下一步",["对照本周补到的证据，区分事实、假设和未核实项。","在经营分析中重新核查。条件未成立时，继续准备或暂不投入。"],"一个有依据的继续、调整或暂停决定。",depends=("resolve_gates",),link="analysis",not_before=horizon-1)
         else:
             p=entry["proposal"];cap=entry["evaluation"]["trial_cash_commitment"]
-            task("register_trial","只选一个候选，先写清退出线",["确认候选："+p["title"]+f"（v{p['version']}），其他方案不叠加执行。",f"本方案总承诺支出上限 ¥{cap}；同时不得突破保留现金 ¥{l['reserve_floor']}。","在方案下登记一项试验，预先冻结评价基准、目标与退出条件；人工确认后才开展。"],"同一任务、同一方案版本的试验登记和冻结评价设计。",depends=("check_demand",),link="analysis",not_before=3)
+            task("register_trial","只选一个候选，先写清退出线",["确认候选："+p["title"]+f"（v{p['version']}），其他方案不叠加执行。",f"本方案总承诺支出上限 ¥{cap}；同时不得突破保留现金 ¥{l['reserve_floor']}。","在方案下登记一项试验，预先冻结评价基准、目标与退出条件；人工确认后才开展。"],"同一任务、同一方案版本的试验登记和冻结评价设计。",depends=tuple(preparation),link="analysis",not_before=3)
             dates=sorted(set([p["spend_date"]]+[x["order_date"] for x in p.get("procurements",[])]))
             for i,d in enumerate(dates):
                 task("execute_"+str(i),"按已核查日期，小范围开展",[f"核对原方案日期 {d}；不同日期的采购与支出仍受同一预算总额约束。","只开展已登记试验内的动作，核对实际费用与可用库存。","供应、需求、现金或工时不符就暂停；本系统不替你下单或联系他人。"],"实际发生的动作、凭证及未开展原因。",minutes=20,depends=("register_trial",),fixed=d,kind="execution",cap=cap,link="analysis")
@@ -99,7 +114,7 @@ class AgendaWorkflows:
         stop=[f"可用现金低于 ¥{l['reserve_floor']} 时停止新增投入。",f"所有已登记试验合计额外投入不得突破本店预算 ¥{l['max_trial_budget']}。","前置条件、供应条件或资料来源发生变化时，先暂停并重新核查。"]+(entry["proposal"].get("stop_conditions",[]) if entry else [])
         out={"request":request,"merchant_id":merchant,"merchant_name":l["name"],"synthetic":l["synthetic"],"source_run":report["run_id"],"source_mode":report["mode"],"summary":summary,"days":days,"backlog":backlog,"stop_conditions":stop,
              "weekly_minutes_cap":weekly,"daily_minutes_cap":daily,"total_minutes":sum(day_use),"plan_spend_cap":entry["evaluation"]["trial_cash_commitment"] if entry and not gates else "0.00",
-             "scope":"补证准备日程" if gates else "单一候选的条件行动日程","notice":"勾选仅记录店主自报进度，不证明收益、付款或经营成效；不会自动改库存与底账现金。"}
+             "scope":"补证准备日程" if gates else "单一候选的条件行动日程","notice":"完成任务后，请另行记录实际收支。"}
         out["fingerprint"]=digest(out)
         return out
 
@@ -116,7 +131,7 @@ class AgendaWorkflows:
                 if e["agenda_id"]==row["id"]:
                     by_id[e["task_id"]].update(status=e["status"],note=e["note"]);data["revision"]+=1
             data["current"]=row is rows[-1]
-            data["completed_count"]=sum(t["status"]=="done" for t in by_id.values());data["task_count"]=len(by_id)
+            data["completed_count"]=sum(t["status"]=="done" for t in by_id.values());data["paused_count"]=sum(t["status"]=="skipped" for t in by_id.values());data["pending_count"]=sum(t["status"]=="pending" for t in by_id.values());data["task_count"]=len(by_id)
             result.append(data)
         return {"agendas":result,"current_id":rows[-1]["id"] if rows else None}
 
