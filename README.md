@@ -31,3 +31,13 @@ python start_public.py
 冻结版最近完整后端回归368项、前端61项、本地固定案例15项通过。规则通过率不是AI总体准确率，构造经营测算不是商户真实增收。具体云端运行、失败及实验边界见docs。
 
 本公开源码不包含账号数据库、真实上传资料、调用凭据、私用录制包或第三方Python运行时；不依赖外部临时测试链接。
+
+## 云端 MCP 约束核验
+
+方案约束工具采用 ARM64 容器部署于 AgentArts 运行时，以 Streamable HTTP 提供服务。智能体提出工具动作，应用侧 MCP 桥接执行云端计算并回传证据；这是应用侧编排，不是控制台原生 MCP 绑定或原生 Skill 发布。
+
+安装 `requirements-agentarts.txt`。将自己的运行时地址配置在 `rebirth/mcp_client.py`，将自己的入站密钥放入本地 JSON 配置（字段 `api_key`），通过环境变量 `REBIRTH_MCP_CREDENTIAL_FILE` 指向该文件。未设置时保持本地计算。密钥不得提交到仓库。
+
+自部署：安装 `requirements-mcp.txt`，使用 `Dockerfile.mcp` 构建 `linux/arm64` 镜像，运行时端口8000，入站协议MCP；在私密环境变量中配置 `REBIRTH_MCP_TOKEN`。若网关与服务均使用 Authorization，令牌应保持一致。凭据托管可能收费。
+
+验收记录见 `testing/mcp-cloud-acceptance.json` 与 `testing/mcp-agent-live-acceptance.json`，后者记录真实智能体请求、云端工具返回及结论引用。运行脚本前需自行配置云端凭据；合成数据结果不证明真实商户收益。团队端点仅为实现参考，不承诺向仓库访客开放。

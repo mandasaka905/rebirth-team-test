@@ -1,0 +1,780 @@
+{
+  "passed": true,
+  "integration": "application-side MCP bridge, not native Managed Agents binding",
+  "run_id": "mcp-proof-64821d4fc18743709a6f19cc58264b4c",
+  "events": [
+    {
+      "kind": "agent_action",
+      "action": {
+        "action": "tool",
+        "name": "proposal_evaluate",
+        "arguments": {
+          "proposal": {
+            "id": "customer_trial",
+            "version": 1,
+            "owner": "customer",
+            "title": "待商户验证的小范围预约试衣",
+            "upfront_cost": "500.00",
+            "other_cost": "0.00",
+            "spend_date": "2026-10-25",
+            "weekly_hours": 4,
+            "sales_assumption": "unverified",
+            "costs_confirmed": false,
+            "items": [
+              {
+                "sku": "COAT_02",
+                "quantity": 5,
+                "price": "139.00",
+                "variable_cash_cost": "400.00",
+                "receipt_date": "2026-11-01"
+              }
+            ],
+            "rationale": "只能基于实际工具证据撰写",
+            "evidence_ids": [
+              "REPLACE_WITH_REAL_TOOL_EVENT_ID"
+            ],
+            "assumptions": [
+              "数量为显式假设，不代表预测销量"
+            ],
+            "stop_conditions": [
+              "到达批准预算上限即停止"
+            ],
+            "model_refs": [
+              {
+                "id": "appointment",
+                "version": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "kind": "agent_action",
+      "action": {
+        "action": "final",
+        "result": {
+          "notes": [
+            "本次仅审查 context.proposals 中的方案 customer_trial v1；不修改参数、不生成新方案。",
+            "证据来源：本阶段 proposal_evaluate 的真实工具事件 mcp-evidence-0（宿主经云端 MCP 实际执行，tool_version=1.0.0，input_sha256=18dc718ca5772eec2507782bdcd957e788457b58ea09af9c4ddd9eb990b96047）。",
+            "计算结论：constraint_pass=false，trial_cash_commitment=2500.00 超过 max_trial_budget=2000.00，命中 BUDGET_EXCEEDED（limit=2000.00）。",
+            "同时命中 MODEL_BINDING_REQUIRED：方案引用的模式 appointment v1 在底账中不存在或版本已过期，模式绑定不成立。",
+            "即使预算检查通过也不等于执行许可：eligible_for_merchant_review=false，本结果不构成推荐、批准或经营动作许可。",
+            "保留未决事项：销量尚未由真实成交验证、活动及单件变动费用尚未核实（不能把 0 费用当作事实）、当前底账为合成测试数据、商户尚未确认经营底账与约束。",
+            "无 procurement 的现货处理方案，不因缺少供货报价、起订量或供货天数判失败；receipt_date 仅为销售回款日，不作为到货日依据。"
+          ],
+          "proposals": [],
+          "objections": [
+            {
+              "proposal_id": "customer_trial",
+              "version": 1,
+              "topic": "cash",
+              "severity": "blocking",
+              "reason": "BUDGET_EXCEEDED：trial_cash_commitment=2500.00（upfront_extra 500.00 + variable_extra 2000.00）超过 max_trial_budget=2000.00，超出 500.00；另命中 MODEL_BINDING_REQUIRED，model_refs 引用的 appointment v1 不存在或已过期；constraint_pass=false。",
+              "request": "将方案现金承诺压缩至 ≤2000.00，并说明取消或缩减了哪些具体动作及其费用依据；同时重新选择底账中存在的模式精确版本后重算。在未满足前不得进入商户审阅或执行。",
+              "evidence_ids": [
+                "mcp-evidence-0"
+              ],
+              "acceptance": "新一轮 proposal_evaluate 不再出现 BUDGET_EXCEEDED 与 MODEL_BINDING_REQUIRED，且 trial_cash_commitment≤2000.00。"
+            }
+          ],
+          "experiment_drafts": [],
+          "model_drafts": [],
+          "model_reviews": []
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "tool": "proposal_evaluate",
+      "arguments": {
+        "proposal": {
+          "id": "customer_trial",
+          "version": 1,
+          "owner": "customer",
+          "title": "待商户验证的小范围预约试衣",
+          "upfront_cost": "500.00",
+          "other_cost": "0.00",
+          "spend_date": "2026-10-25",
+          "weekly_hours": 4,
+          "sales_assumption": "unverified",
+          "costs_confirmed": false,
+          "items": [
+            {
+              "sku": "COAT_02",
+              "quantity": 5,
+              "price": "139.00",
+              "variable_cash_cost": "400.00",
+              "receipt_date": "2026-11-01"
+            }
+          ],
+          "rationale": "只能基于实际工具证据撰写",
+          "evidence_ids": [
+            "REPLACE_WITH_REAL_TOOL_EVENT_ID"
+          ],
+          "assumptions": [
+            "数量为显式假设，不代表预测销量"
+          ],
+          "stop_conditions": [
+            "到达批准预算上限即停止"
+          ],
+          "model_refs": [
+            {
+              "id": "appointment",
+              "version": 1
+            }
+          ]
+        }
+      },
+      "value": {
+        "proposal_id": "customer_trial",
+        "checks": [
+          {
+            "code": "MODEL_BINDING_REQUIRED",
+            "detail": "关联模式不存在或版本已过期，请重新选择"
+          },
+          {
+            "code": "BUDGET_EXCEEDED",
+            "limit": "2000.00"
+          }
+        ],
+        "unknowns": [
+          "销量尚未由真实成交验证；基准情景仅是商户假设",
+          "活动及单件变动费用尚未核实，不能把零费用当作事实",
+          "当前底账为合成测试数据，不代表真实商户经营结果",
+          "商户尚未确认经营底账和约束"
+        ],
+        "constraint_pass": false,
+        "eligible_for_merchant_review": false,
+        "declared_revenue": "695.00",
+        "known_stock_cost": "400.00",
+        "cash_cost_breakdown": {
+          "upfront_extra": "500.00",
+          "variable_extra": "2000.00",
+          "new_procurement": "0.00",
+          "sold_goods_cost": "400.00",
+          "notice": "已付现货成本仅进入毛利，不重复计为新增现金支出；未付货款另录必要付款。"
+        },
+        "gross_profit_after_declared_trial_costs": "-2205.00",
+        "incremental_cash_under_declared_sales": "-1805.00",
+        "trial_cash_commitment": "2500.00",
+        "scenarios": [
+          {
+            "scenario": "zero_sales",
+            "minimum_cash_before_receipts": "3500.00",
+            "ending_cash": "3500.00",
+            "first_reserve_breach": null,
+            "days": [
+              {
+                "date": "2026-10-24",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "12000.00"
+              },
+              {
+                "date": "2026-10-25",
+                "outflow": "500.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-26",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-27",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-28",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-29",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-30",
+                "outflow": "8000.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-10-31",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-01",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-02",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-03",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-04",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-05",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-06",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-07",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-08",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-09",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-10",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-11",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-12",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-13",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-14",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-15",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-16",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-17",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-18",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-19",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-20",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-21",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-22",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-23",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              }
+            ]
+          },
+          {
+            "scenario": "half_sales",
+            "minimum_cash_before_receipts": "2700.00",
+            "ending_cash": "2978.00",
+            "first_reserve_breach": null,
+            "days": [
+              {
+                "date": "2026-10-24",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "12000.00"
+              },
+              {
+                "date": "2026-10-25",
+                "outflow": "500.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-26",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-27",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-28",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-29",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-30",
+                "outflow": "8000.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-10-31",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-01",
+                "outflow": "800.00",
+                "inflow": "278.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-02",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-03",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-04",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-05",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-06",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-07",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-08",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-09",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-10",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-11",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-12",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-13",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-14",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-15",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-16",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-17",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-18",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-19",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-20",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-21",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-22",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              },
+              {
+                "date": "2026-11-23",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2978.00"
+              }
+            ]
+          },
+          {
+            "scenario": "declared_sales",
+            "minimum_cash_before_receipts": "1500.00",
+            "ending_cash": "2195.00",
+            "first_reserve_breach": "2026-11-01",
+            "days": [
+              {
+                "date": "2026-10-24",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "12000.00"
+              },
+              {
+                "date": "2026-10-25",
+                "outflow": "500.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-26",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-27",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-28",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-29",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "11500.00"
+              },
+              {
+                "date": "2026-10-30",
+                "outflow": "8000.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-10-31",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "3500.00"
+              },
+              {
+                "date": "2026-11-01",
+                "outflow": "2000.00",
+                "inflow": "695.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-02",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-03",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-04",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-05",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-06",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-07",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-08",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-09",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-10",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-11",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-12",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-13",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-14",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-15",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-16",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-17",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-18",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-19",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-20",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-21",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-22",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              },
+              {
+                "date": "2026-11-23",
+                "outflow": "0.00",
+                "inflow": "0.00",
+                "closing": "2195.00"
+              }
+            ]
+          }
+        ],
+        "procurement": {
+          "lines": [],
+          "checks": [],
+          "unknowns": [],
+          "cash_commitment": "0.00",
+          "stock_path": [
+            {
+              "sku": "COAT_02",
+              "opening": 20,
+              "ordered": 0,
+              "available_on_delivery": 20,
+              "declared_sold": 5,
+              "remaining_on_delivery": 15
+            }
+          ],
+          "costs_complete": true,
+          "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+        },
+        "definitions": [
+          "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+          "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+          "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+          "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+        ],
+        "_mcp": {
+          "transport": "streamable-http",
+          "input_sha256": "18dc718ca5772eec2507782bdcd957e788457b58ea09af9c4ddd9eb990b96047",
+          "tool_version": "1.0.0",
+          "endpoint": "https://defaultgw-gmytsnryg4.cn-southwest-2.huaweicloud-agentarts.com/runtimes/rebirth-constraint-mcp/invocations?endpoint=Latest"
+        }
+      },
+      "evidence_id": "mcp-evidence-0"
+    }
+  ]
+}

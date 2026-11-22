@@ -1,0 +1,10 @@
+MCP云端验收结果 2026-11-23
+运行时 rebirth-constraint-mcp，v3，ARM64镜像1.0.1-arm64。
+云端握手、工具发现、超预算计算、错误输入和未授权请求验收均通过。
+真实AgentArts现金智能体发起proposal_evaluate，应用经MCP调用云端，智能体引用mcp-evidence-0形成最终结论，2次模型请求。
+结论保留2500元投入超过2000元预算、模式绑定问题和未知事项；没有将工具结果当作执行许可。
+记录 testing/mcp-cloud-acceptance.json 与 testing/mcp-agent-live-acceptance.json。
+接入方式：应用侧MCP桥接；不是Managed Agents控制台原生MCP绑定或原生Skill发布。
+设置REBIRTH_MCP_CREDENTIAL_FILE为本机入站配置的绝对路径后，proposal_evaluate使用云端MCP；未设置时保持原本地计算。凭据不进入模型上下文，失败不伪装成功。
+本次使用合成数据，只证明技术调用闭环，不证明真实经营成效。
+DEW凭据按实际使用继续计费。

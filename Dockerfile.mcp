@@ -1,0 +1,8 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements-mcp.txt .
+RUN pip install --no-cache-dir -r requirements-mcp.txt
+COPY rebirth ./rebirth
+ENV MCP_HOST=0.0.0.0 PORT=8000
+EXPOSE 8000
+CMD ["python", "-m", "rebirth.mcp_server"]

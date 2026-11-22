@@ -194,6 +194,12 @@ TOOL_ARGS = {
 def dispatch(ledger, name, args, *, history=(), knowledge=(), investigations=(), research=()):
     if not isinstance(args, dict):
         raise ValidationError("未知工具或参数类型错误")
+    if name == 'proposal_evaluate' and 'proposal' in args:
+        import os
+        credential_file = os.environ.get('REBIRTH_MCP_CREDENTIAL_FILE')
+        if credential_file:
+            from .mcp_client import evaluate_remote
+            return evaluate_remote(ledger, args['proposal'], credential_file)
     if name == "supply_analyze":
         from .supply import analyze
         return analyze(ledger)
