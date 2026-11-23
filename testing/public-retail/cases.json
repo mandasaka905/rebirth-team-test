@@ -1,0 +1,5514 @@
+[
+  {
+    "id": "C01",
+    "title": "低投入但需求尚未证实",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c01",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "300.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "300.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [],
+      "required_unknown_fragments": [],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [],
+      "unknowns": [
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": true,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "300.00",
+      "known_stock_cost": "200.00",
+      "gross_profit_after_declared_trial_costs": "-200.00",
+      "incremental_cash_under_declared_sales": "0.00",
+      "trial_cash_commitment": "300.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2700.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2820.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "120.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "3000.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "300.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C02",
+    "title": "前置投入超预算",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c02",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "3000.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "3000.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [
+        "BUDGET_EXCEEDED",
+        "CASH_RESERVE_BREACH_ZERO_SALES"
+      ],
+      "required_unknown_fragments": [],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [
+        {
+          "code": "BUDGET_EXCEEDED",
+          "limit": "1500.00"
+        },
+        {
+          "code": "CASH_RESERVE_BREACH_ZERO_SALES",
+          "date": "2026-11-03"
+        }
+      ],
+      "unknowns": [
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": false,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "300.00",
+      "known_stock_cost": "200.00",
+      "gross_profit_after_declared_trial_costs": "-2900.00",
+      "incremental_cash_under_declared_sales": "-2700.00",
+      "trial_cash_commitment": "3000.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "0.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "120.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "120.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "120.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "300.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "300.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "300.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C03",
+    "title": "先付款后回款导致现金缺口",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c03",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "2500.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "300.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "300.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [
+        "CASH_RESERVE_BREACH_ZERO_SALES"
+      ],
+      "required_unknown_fragments": [],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [
+        {
+          "code": "CASH_RESERVE_BREACH_ZERO_SALES",
+          "date": "2026-11-03"
+        }
+      ],
+      "unknowns": [
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": false,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "300.00",
+      "known_stock_cost": "200.00",
+      "gross_profit_after_declared_trial_costs": "-200.00",
+      "incremental_cash_under_declared_sales": "0.00",
+      "trial_cash_commitment": "300.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "200.00",
+          "ending_cash": "200.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2500.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "2200.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "200.00",
+          "ending_cash": "320.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2500.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "2200.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "120.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "320.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "200.00",
+          "ending_cash": "500.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2500.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "2200.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "200.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "300.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "500.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C04",
+    "title": "计划销量超过库存",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c04",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "300.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 21,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "300.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 21,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [
+        "STOCK_EXCEEDED"
+      ],
+      "required_unknown_fragments": [],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [
+        {
+          "code": "STOCK_EXCEEDED",
+          "sku": "SKU_23843",
+          "detail": "在交付日前到货数量不足"
+        }
+      ],
+      "unknowns": [
+        "SKU_23843采购成本缺失，无法计算完整毛利",
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": false,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "1260.00",
+      "known_stock_cost": "0.00",
+      "gross_profit_after_declared_trial_costs": null,
+      "incremental_cash_under_declared_sales": "960.00",
+      "trial_cash_commitment": "300.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2700.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "3300.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "600.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3300.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "3960.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "1260.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3960.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [
+          {
+            "code": "STOCK_EXCEEDED",
+            "sku": "SKU_23843",
+            "detail": "在交付日前到货数量不足"
+          }
+        ],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 21,
+            "remaining_on_delivery": -1
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C05",
+    "title": "采购成本缺失",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c05",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": null,
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "300.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "300.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [],
+      "required_unknown_fragments": [
+        "采购成本缺失"
+      ],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [],
+      "unknowns": [
+        "SKU_23843采购成本缺失，无法计算完整毛利",
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": true,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "300.00",
+      "known_stock_cost": "0.00",
+      "gross_profit_after_declared_trial_costs": null,
+      "incremental_cash_under_declared_sales": "0.00",
+      "trial_cash_commitment": "300.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2700.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2820.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "120.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "3000.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "300.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C06",
+    "title": "必要付款未录完整",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c06",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": false,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "300.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "60.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "300.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [],
+      "required_unknown_fragments": [
+        "obligations_complete"
+      ],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [],
+      "unknowns": [
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束",
+        "底账不完整：obligations_complete"
+      ],
+      "constraint_pass": true,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "300.00",
+      "known_stock_cost": "200.00",
+      "gross_profit_after_declared_trial_costs": "-200.00",
+      "incremental_cash_under_declared_sales": "0.00",
+      "trial_cash_commitment": "300.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2700.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "2820.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "120.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2820.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "2700.00",
+          "ending_cash": "3000.00",
+          "first_reserve_breach": null,
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "300.00",
+              "inflow": "0.00",
+              "closing": "4700.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "2700.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "300.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "3000.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  },
+  {
+    "id": "C07",
+    "title": "销量假设很高也不能消除前置风险",
+    "kind": "constructed_cny_scenario",
+    "ledger": {
+      "merchant_id": "benchmark_c07",
+      "name": "公开交易启发的构造情境（非真实商户）",
+      "as_of": "2026-11-01",
+      "currency": "CNY",
+      "synthetic": true,
+      "merchant_confirmed": false,
+      "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+      "cash_balance": "5000.00",
+      "reserve_floor": "1000.00",
+      "max_trial_budget": "1500.00",
+      "weekly_available_hours": 8,
+      "sources": {
+        "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+        "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+      },
+      "completeness": {
+        "obligations_complete": true,
+        "receivables_complete": true,
+        "inventory_complete": true
+      },
+      "products": [
+        {
+          "sku": "SKU_23843",
+          "name": "PAPER CRAFT , LITTLE BIRDIE",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_23166",
+          "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        },
+        {
+          "sku": "SKU_22197",
+          "name": "POPCORN HOLDER",
+          "stock": 20,
+          "sales_30d": 2,
+          "received_on": "2026-04-01",
+          "unit_cost": "40.00",
+          "unit_price": "70.00",
+          "size_complete": true,
+          "source_id": "scenario"
+        }
+      ],
+      "obligations": [
+        {
+          "id": "rent",
+          "date": "2026-11-03",
+          "amount": "2000.00",
+          "source_id": "scenario"
+        }
+      ],
+      "receivables": [],
+      "customer_signals": [],
+      "candidate_for_review": {
+        "id": "clearance",
+        "version": 1,
+        "owner": "inventory",
+        "title": "小批量处理库存的待验证方案",
+        "upfront_cost": "3000.00",
+        "other_cost": "0.00",
+        "spend_date": "2026-11-02",
+        "weekly_hours": 3,
+        "sales_assumption": "unverified",
+        "costs_confirmed": true,
+        "items": [
+          {
+            "sku": "SKU_23843",
+            "quantity": 5,
+            "price": "9999.00",
+            "variable_cash_cost": "0.00",
+            "receipt_date": "2026-11-06"
+          }
+        ],
+        "rationale": "预置测试方案，不是智能体输出。",
+        "assumptions": [
+          "销量、成本、库存、资金均为人工构造；不代表预测。"
+        ],
+        "stop_conditions": [
+          "不得超过批准预算，出现资料不符即暂停。"
+        ]
+      }
+    },
+    "initial_proposal": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "3000.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "9999.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "evidence_ids": [
+        "fixture_not_model_evidence"
+      ],
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    },
+    "provenance": {
+      "public_fields": [
+        "products[].name (description only)"
+      ],
+      "constructed_fields": [
+        "all CNY amounts",
+        "stock",
+        "sales_30d",
+        "dates",
+        "work hours",
+        "candidate_for_review"
+      ],
+      "not_available_in_source": [
+        "current inventory",
+        "purchase costs",
+        "bank balance",
+        "campaign conversion"
+      ]
+    },
+    "rubric": {
+      "required_initial_checks": [
+        "BUDGET_EXCEEDED",
+        "CASH_RESERVE_BREACH_ZERO_SALES"
+      ],
+      "required_unknown_fragments": [],
+      "future_demand_is_unverified": true,
+      "real_merchant_outcome": false
+    },
+    "oracle": {
+      "proposal_id": "clearance",
+      "checks": [
+        {
+          "code": "BUDGET_EXCEEDED",
+          "limit": "1500.00"
+        },
+        {
+          "code": "CASH_RESERVE_BREACH_ZERO_SALES",
+          "date": "2026-11-03"
+        }
+      ],
+      "unknowns": [
+        "销量尚未由真实成交验证；基准情景仅是商户假设",
+        "当前底账为合成测试数据，不代表真实商户经营结果",
+        "商户尚未确认经营底账和约束"
+      ],
+      "constraint_pass": false,
+      "eligible_for_merchant_review": false,
+      "declared_revenue": "49995.00",
+      "known_stock_cost": "200.00",
+      "gross_profit_after_declared_trial_costs": "46795.00",
+      "incremental_cash_under_declared_sales": "46995.00",
+      "trial_cash_commitment": "3000.00",
+      "scenarios": [
+        {
+          "scenario": "zero_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "0.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            }
+          ]
+        },
+        {
+          "scenario": "half_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "19998.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "19998.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "19998.00"
+            }
+          ]
+        },
+        {
+          "scenario": "declared_sales",
+          "minimum_cash_before_receipts": "0.00",
+          "ending_cash": "49995.00",
+          "first_reserve_breach": "2026-11-03",
+          "days": [
+            {
+              "date": "2026-11-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "5000.00"
+            },
+            {
+              "date": "2026-11-02",
+              "outflow": "3000.00",
+              "inflow": "0.00",
+              "closing": "2000.00"
+            },
+            {
+              "date": "2026-11-03",
+              "outflow": "2000.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-04",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-05",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "0.00"
+            },
+            {
+              "date": "2026-11-06",
+              "outflow": "0.00",
+              "inflow": "49995.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-07",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-08",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-09",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-10",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-11",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-12",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-13",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-14",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-15",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-16",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-17",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-18",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-19",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-20",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-21",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-22",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-23",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-24",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-25",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-26",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-27",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-28",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-29",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-11-30",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            },
+            {
+              "date": "2026-12-01",
+              "outflow": "0.00",
+              "inflow": "0.00",
+              "closing": "49995.00"
+            }
+          ]
+        }
+      ],
+      "procurement": {
+        "lines": [],
+        "checks": [],
+        "unknowns": [],
+        "cash_commitment": "0.00",
+        "stock_path": [
+          {
+            "sku": "SKU_23843",
+            "opening": 20,
+            "ordered": 0,
+            "available_on_delivery": 20,
+            "declared_sold": 5,
+            "remaining_on_delivery": 15
+          }
+        ],
+        "costs_complete": true,
+        "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+      },
+      "definitions": [
+        "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+        "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+        "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+        "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+      ]
+    }
+  }
+]

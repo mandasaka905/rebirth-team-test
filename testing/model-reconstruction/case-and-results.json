@@ -1,0 +1,1302 @@
+{
+  "kind": "constructed_local_comparison_not_ai_run",
+  "ledger": {
+    "merchant_id": "planning_sample",
+    "name": "经营重构完整样例（全部合成）",
+    "as_of": "2026-10-25",
+    "currency": "CNY",
+    "synthetic": true,
+    "merchant_confirmed": true,
+    "goal": "仅用于本地验收：调查库存与经营期间变化，比较不同小步试验；无真实商户或收益结论。",
+    "cash_balance": "12000.00",
+    "reserve_floor": "2000.00",
+    "max_trial_budget": "2000.00",
+    "weekly_available_hours": 6,
+    "sources": {
+      "stock_fixture": "合成库存，用于检查未知成本和缺码",
+      "cash_fixture": "合成付款记录",
+      "demand_fixture": "合成预约询问，不是订单",
+      "period_fixture": "人为编制的两期经营记录，无真实经营成效"
+    },
+    "completeness": {
+      "inventory_complete": true,
+      "obligations_complete": true,
+      "receivables_complete": true
+    },
+    "products": [
+      {
+        "sku": "TOP_01",
+        "name": "换季衬衫",
+        "stock": 40,
+        "sales_30d": 3,
+        "received_on": "2026-04-01",
+        "unit_cost": "60.00",
+        "unit_price": "99.00",
+        "size_complete": false,
+        "source_id": "stock_fixture"
+      },
+      {
+        "sku": "COAT_02",
+        "name": "基础外套",
+        "stock": 20,
+        "sales_30d": 4,
+        "received_on": "2026-06-01",
+        "unit_cost": "80.00",
+        "unit_price": "139.00",
+        "size_complete": true,
+        "source_id": "stock_fixture"
+      },
+      {
+        "sku": "KNIT_03",
+        "name": "针织衫",
+        "stock": 12,
+        "sales_30d": 8,
+        "received_on": "2026-10-01",
+        "unit_cost": "70.00",
+        "unit_price": "119.00",
+        "size_complete": true,
+        "source_id": "stock_fixture"
+      }
+    ],
+    "obligations": [
+      {
+        "id": "rent",
+        "label_text": "合成房租",
+        "date": "2026-10-30",
+        "amount": "8000.00",
+        "source_id": "cash_fixture"
+      }
+    ],
+    "receivables": [],
+    "customer_signals": [
+      {
+        "observation": "合成访谈：有顾客询问下班后预约试衣，未发生实际成交。",
+        "source_id": "demand_fixture"
+      }
+    ],
+    "operating_periods": [
+      {
+        "id": "period_sep",
+        "start": "2026-09-01",
+        "end": "2026-09-30",
+        "revenue": "36000.00",
+        "goods_cost": "18000.00",
+        "operating_cost": "8000.00",
+        "visits": 600,
+        "buyers": 180,
+        "returning_buyers": 90,
+        "source_id": "period_fixture",
+        "scope_id": "shop_all",
+        "count_basis": "person_visits",
+        "scope_description": "全店同口径合成记录"
+      },
+      {
+        "id": "period_oct",
+        "start": "2026-10-01",
+        "end": "2026-10-20",
+        "revenue": "21000.00",
+        "goods_cost": "13000.00",
+        "operating_cost": "9000.00",
+        "visits": 300,
+        "buyers": 70,
+        "returning_buyers": 20,
+        "source_id": "period_fixture",
+        "scope_id": "shop_all",
+        "count_basis": "person_visits",
+        "scope_description": "全店同口径合成记录"
+      }
+    ],
+    "business_models": [
+      {
+        "id": "current",
+        "name": "现有门店销售（合成）",
+        "status": "current",
+        "customer_segment": "社区到店居民",
+        "customer_problem": "试穿与选购",
+        "value_proposition": "到店试穿后购买",
+        "channel": "自然到店",
+        "fulfilment": "线下交付与人工售后",
+        "revenue_method": "按件销售",
+        "key_resources": "已有服装和店面",
+        "required_skills": "接待\n库存核对",
+        "available_skills": "接待\n库存核对",
+        "demand_evidence": "全部为人工编制，订单不是预测",
+        "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+        "period_days": 14,
+        "unit_revenue": "70.00",
+        "unit_cost": "40.00",
+        "fixed_cost": "200.00",
+        "investment": "0.00",
+        "assumed_orders": 20,
+        "weekly_hours": 6,
+        "costs_confirmed": false,
+        "version": 1
+      }
+    ],
+    "accounts": {
+      "opening": {
+        "date": "2026-10-01",
+        "balance": "12500.00",
+        "source_note": "合成期初"
+      },
+      "purchases": [
+        {
+          "id": "po_demo",
+          "date": "2026-10-20",
+          "sku": "COAT_02",
+          "quantity": 5,
+          "unit_cost": "100.00",
+          "other_cost": "0.00",
+          "due_date": "2026-10-25",
+          "supplier": "合成供货代号",
+          "external_ref": "SYN-INV-001",
+          "obligation_id": "",
+          "source_note": "合成历史采购，已包含在库存底账，不自动入库"
+        }
+      ],
+      "cash_entries": [
+        {
+          "id": "pay_demo",
+          "date": "2026-10-21",
+          "direction": "out",
+          "category": "purchase",
+          "amount": "500.00",
+          "external_ref": "SYN-PAY-001",
+          "purchase_id": "po_demo",
+          "source_note": "合成历史付款，已体现在现金底账"
+        }
+      ]
+    },
+    "customer_cohorts": [
+      {
+        "cohort_id": "cohort_aug_demo",
+        "label": "八月固定客群（合成）",
+        "definition": "八月购买过的固定100名去重客户；仅匿名汇总",
+        "baseline_start": "2026-08-01",
+        "baseline_end": "2026-08-31",
+        "base_size": 100,
+        "membership_confirmed": true,
+        "observation_complete": true,
+        "source_note": "人工编制的固定客群记录，不含个人ID，不代表真实流失",
+        "id": "cohort_sep",
+        "start": "2026-09-01",
+        "end": "2026-09-25",
+        "retained": 60
+      },
+      {
+        "cohort_id": "cohort_aug_demo",
+        "label": "八月固定客群（合成）",
+        "definition": "八月购买过的固定100名去重客户；仅匿名汇总",
+        "baseline_start": "2026-08-01",
+        "baseline_end": "2026-08-31",
+        "base_size": 100,
+        "membership_confirmed": true,
+        "observation_complete": true,
+        "source_note": "人工编制的固定客群记录，不含个人ID，不代表真实流失",
+        "id": "cohort_oct",
+        "start": "2026-10-01",
+        "end": "2026-10-25",
+        "retained": 40
+      }
+    ]
+  },
+  "arguments": {
+    "baseline_ref": {
+      "id": "current",
+      "version": 1
+    },
+    "drafts": [
+      {
+        "id": "pickup",
+        "version": 1,
+        "owner": "customer",
+        "model": {
+          "id": "pickup",
+          "name": "预约到店自提候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "自愿咨询后的预约入口",
+          "fulfilment": "约定时段到店自提",
+          "revenue_method": "交付后按件结算",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "68.00",
+          "unit_cost": "41.00",
+          "fixed_cost": "60.00",
+          "investment": "80.00",
+          "assumed_orders": 20,
+          "weekly_hours": 4,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "rationale": "比较获客与交付结构，订单量不是预测",
+        "assumptions": [
+          "全部数字为构造假设",
+          "比较只覆盖声明的增量成本"
+        ],
+        "supply_requirements": [
+          {
+            "sku": "TOP_01",
+            "quantity": 20
+          }
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序",
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ]
+      },
+      {
+        "id": "delivery",
+        "version": 1,
+        "owner": "customer",
+        "model": {
+          "id": "delivery",
+          "name": "即时配送候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "第三方平台获客，条件未核实",
+          "fulfilment": "接单后即时配送",
+          "revenue_method": "平台代收后结算，时序待核实",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对\n配送协调",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "70.00",
+          "unit_cost": null,
+          "fixed_cost": "300.00",
+          "investment": "300.00",
+          "assumed_orders": 20,
+          "weekly_hours": 10,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "platform",
+              "label": "平台费用",
+              "amount": null,
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "delivery",
+              "label": "配送",
+              "amount": "7.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "rationale": "比较获客与交付结构，订单量不是预测",
+        "assumptions": [
+          "全部数字为构造假设",
+          "比较只覆盖声明的增量成本"
+        ],
+        "supply_requirements": [
+          {
+            "sku": "TOP_01",
+            "quantity": 20
+          }
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序",
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ]
+      }
+    ],
+    "scope": "同店同款现货、每单一件、14天；只计声明的增量成本，不含原店租与原人工；口径待商户核实"
+  },
+  "before": {
+    "baseline_ref": {
+      "id": "current",
+      "version": 1
+    },
+    "scope": "同店同款现货、每单一件、14天；只计声明的增量成本，不含原店租与原人工；口径待商户核实",
+    "scope_confirmed": false,
+    "rows": [
+      {
+        "kind": "baseline",
+        "draft_id": null,
+        "draft_version": null,
+        "model": {
+          "id": "current",
+          "name": "现有门店销售（合成）",
+          "status": "current",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "自然到店",
+          "fulfilment": "线下交付与人工售后",
+          "revenue_method": "按件销售",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "70.00",
+          "unit_cost": "40.00",
+          "fixed_cost": "200.00",
+          "investment": "0.00",
+          "assumed_orders": 20,
+          "weekly_hours": 6,
+          "costs_confirmed": false,
+          "version": 1
+        },
+        "assessment": {
+          "model": {
+            "id": "current",
+            "name": "现有门店销售（合成）",
+            "status": "current",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "自然到店",
+            "fulfilment": "线下交付与人工售后",
+            "revenue_method": "按件销售",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "70.00",
+            "unit_cost": "40.00",
+            "fixed_cost": "200.00",
+            "investment": "0.00",
+            "assumed_orders": 20,
+            "weekly_hours": 6,
+            "costs_confirmed": false,
+            "version": 1
+          },
+          "unit_contribution": "30.00",
+          "break_even_orders": 7,
+          "assumed_period_contribution": "400.00",
+          "investment_payback_periods": "0.00",
+          "missing_skills": [],
+          "issues": [
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-200.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": "100.00"
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": "400.00"
+          }
+        ],
+        "comparable_period": true
+      },
+      {
+        "kind": "candidate",
+        "draft_id": "pickup",
+        "draft_version": 1,
+        "model": {
+          "id": "pickup",
+          "name": "预约到店自提候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "自愿咨询后的预约入口",
+          "fulfilment": "约定时段到店自提",
+          "revenue_method": "交付后按件结算",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "68.00",
+          "unit_cost": "41.00",
+          "fixed_cost": "60.00",
+          "investment": "80.00",
+          "assumed_orders": 20,
+          "weekly_hours": 4,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "assessment": {
+          "model": {
+            "id": "pickup",
+            "name": "预约到店自提候选",
+            "status": "candidate",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "自愿咨询后的预约入口",
+            "fulfilment": "约定时段到店自提",
+            "revenue_method": "交付后按件结算",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "68.00",
+            "unit_cost": "41.00",
+            "fixed_cost": "60.00",
+            "investment": "80.00",
+            "assumed_orders": 20,
+            "weekly_hours": 4,
+            "costs_confirmed": false,
+            "version": 1,
+            "unit_cost_components": [
+              {
+                "id": "goods",
+                "label": "商品",
+                "amount": "40.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "pack",
+                "label": "包装",
+                "amount": "1.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              }
+            ]
+          },
+          "unit_contribution": "27.00",
+          "break_even_orders": 3,
+          "assumed_period_contribution": "480.00",
+          "investment_payback_periods": "0.17",
+          "missing_skills": [],
+          "issues": [
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [
+          {
+            "field": "channel",
+            "before": "自然到店",
+            "after": "自愿咨询后的预约入口"
+          },
+          {
+            "field": "fulfilment",
+            "before": "线下交付与人工售后",
+            "after": "约定时段到店自提"
+          },
+          {
+            "field": "revenue_method",
+            "before": "按件销售",
+            "after": "交付后按件结算"
+          }
+        ],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-60.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": "210.00"
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": "480.00"
+          }
+        ],
+        "comparable_period": true,
+        "blockers": [],
+        "warnings": [
+          "成本未核实，不能据此判断可持续",
+          "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+        ],
+        "perspectives": {
+          "inventory": [
+            "TOP_01：需要20件，现货40件",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "cash": [
+            "成本未核实，不能据此判断可持续",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "customer": [
+            "需求证据仍是待验证线索：全部为人工编制，订单不是预测",
+            "验证安排：先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+          ]
+        },
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+      },
+      {
+        "kind": "candidate",
+        "draft_id": "delivery",
+        "draft_version": 1,
+        "model": {
+          "id": "delivery",
+          "name": "即时配送候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "第三方平台获客，条件未核实",
+          "fulfilment": "接单后即时配送",
+          "revenue_method": "平台代收后结算，时序待核实",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对\n配送协调",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "70.00",
+          "unit_cost": null,
+          "fixed_cost": "300.00",
+          "investment": "300.00",
+          "assumed_orders": 20,
+          "weekly_hours": 10,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "platform",
+              "label": "平台费用",
+              "amount": null,
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "delivery",
+              "label": "配送",
+              "amount": "7.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "assessment": {
+          "model": {
+            "id": "delivery",
+            "name": "即时配送候选",
+            "status": "candidate",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "第三方平台获客，条件未核实",
+            "fulfilment": "接单后即时配送",
+            "revenue_method": "平台代收后结算，时序待核实",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对\n配送协调",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "70.00",
+            "unit_cost": null,
+            "fixed_cost": "300.00",
+            "investment": "300.00",
+            "assumed_orders": 20,
+            "weekly_hours": 10,
+            "costs_confirmed": false,
+            "version": 1,
+            "unit_cost_components": [
+              {
+                "id": "goods",
+                "label": "商品",
+                "amount": "40.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "pack",
+                "label": "包装",
+                "amount": "1.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "platform",
+                "label": "平台费用",
+                "amount": null,
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "delivery",
+                "label": "配送",
+                "amount": "7.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              }
+            ]
+          },
+          "unit_contribution": null,
+          "break_even_orders": null,
+          "assumed_period_contribution": null,
+          "investment_payback_periods": null,
+          "missing_skills": [
+            "配送协调"
+          ],
+          "issues": [
+            "存在未知收入或成本，缺失不补零",
+            "能力尚待补齐：配送协调",
+            "每周工时超过店主可投入时间",
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [
+          {
+            "field": "channel",
+            "before": "自然到店",
+            "after": "第三方平台获客，条件未核实"
+          },
+          {
+            "field": "fulfilment",
+            "before": "线下交付与人工售后",
+            "after": "接单后即时配送"
+          },
+          {
+            "field": "revenue_method",
+            "before": "按件销售",
+            "after": "平台代收后结算，时序待核实"
+          },
+          {
+            "field": "required_skills",
+            "before": "接待\n库存核对",
+            "after": "接待\n库存核对\n配送协调"
+          }
+        ],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-300.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": null
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": null
+          }
+        ],
+        "comparable_period": true,
+        "blockers": [
+          "每周工时超过店主可用时间"
+        ],
+        "warnings": [
+          "存在未知收入或成本，缺失不补零",
+          "能力尚待补齐：配送协调",
+          "每周工时超过店主可投入时间",
+          "成本未核实，不能据此判断可持续",
+          "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+        ],
+        "perspectives": {
+          "inventory": [
+            "TOP_01：需要20件，现货40件",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "cash": [
+            "存在未知收入或成本，缺失不补零",
+            "每周工时超过店主可投入时间",
+            "成本未核实，不能据此判断可持续",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "customer": [
+            "需求证据仍是待验证线索：全部为人工编制，订单不是预测",
+            "验证安排：先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序",
+            "每周工时超过店主可用时间",
+            "能力尚待补齐：配送协调",
+            "每周工时超过店主可投入时间"
+          ]
+        },
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+      }
+    ],
+    "same_period": true,
+    "selected_winner": null,
+    "notice": "按声明口径比较经营方式，不预测订单或自动选出最优模式。期间贡献不扣初始投入；投入不重复当费用。回款、库存和必要付款须在具体行动方案中另做逐日核查。"
+  },
+  "revised_draft": {
+    "id": "delivery",
+    "version": 2,
+    "owner": "customer",
+    "model": {
+      "id": "delivery",
+      "name": "平台展示后预约集中自提候选",
+      "status": "candidate",
+      "customer_segment": "社区到店居民",
+      "customer_problem": "试穿与选购",
+      "value_proposition": "到店试穿后购买",
+      "channel": "平台展示规则待核实，先限自愿咨询范围",
+      "fulfilment": "约定时段集中自提，不提供即时配送",
+      "revenue_method": "到店交付后结算",
+      "key_resources": "已有服装和店面",
+      "required_skills": "接待\n库存核对",
+      "available_skills": "接待\n库存核对",
+      "demand_evidence": "全部为人工编制，订单不是预测",
+      "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+      "period_days": 14,
+      "unit_revenue": "70.00",
+      "unit_cost": "41.00",
+      "fixed_cost": "100.00",
+      "investment": "100.00",
+      "assumed_orders": 20,
+      "weekly_hours": 4,
+      "costs_confirmed": false,
+      "version": 1,
+      "unit_cost_components": [
+        {
+          "id": "goods",
+          "label": "商品",
+          "amount": "40.00",
+          "basis": "构造测算假设，待核实",
+          "basis_kind": "assumption"
+        },
+        {
+          "id": "pack",
+          "label": "包装",
+          "amount": "1.00",
+          "basis": "构造测算假设，待核实",
+          "basis_kind": "assumption"
+        }
+      ]
+    },
+    "rationale": "构造修订：放弃即时配送，改为预约集中自提以检验交付能力",
+    "assumptions": [
+      "全部数字为构造假设",
+      "比较只覆盖声明的增量成本"
+    ],
+    "supply_requirements": [
+      {
+        "sku": "TOP_01",
+        "quantity": 20
+      }
+    ],
+    "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序",
+    "evidence_ids": [
+      "fixture_not_agent_evidence"
+    ]
+  },
+  "after": {
+    "baseline_ref": {
+      "id": "current",
+      "version": 1
+    },
+    "scope": "同店同款现货、每单一件、14天；只计声明的增量成本，不含原店租与原人工；口径待商户核实",
+    "scope_confirmed": false,
+    "rows": [
+      {
+        "kind": "baseline",
+        "draft_id": null,
+        "draft_version": null,
+        "model": {
+          "id": "current",
+          "name": "现有门店销售（合成）",
+          "status": "current",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "自然到店",
+          "fulfilment": "线下交付与人工售后",
+          "revenue_method": "按件销售",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "70.00",
+          "unit_cost": "40.00",
+          "fixed_cost": "200.00",
+          "investment": "0.00",
+          "assumed_orders": 20,
+          "weekly_hours": 6,
+          "costs_confirmed": false,
+          "version": 1
+        },
+        "assessment": {
+          "model": {
+            "id": "current",
+            "name": "现有门店销售（合成）",
+            "status": "current",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "自然到店",
+            "fulfilment": "线下交付与人工售后",
+            "revenue_method": "按件销售",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "70.00",
+            "unit_cost": "40.00",
+            "fixed_cost": "200.00",
+            "investment": "0.00",
+            "assumed_orders": 20,
+            "weekly_hours": 6,
+            "costs_confirmed": false,
+            "version": 1
+          },
+          "unit_contribution": "30.00",
+          "break_even_orders": 7,
+          "assumed_period_contribution": "400.00",
+          "investment_payback_periods": "0.00",
+          "missing_skills": [],
+          "issues": [
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-200.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": "100.00"
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": "400.00"
+          }
+        ],
+        "comparable_period": true
+      },
+      {
+        "kind": "candidate",
+        "draft_id": "pickup",
+        "draft_version": 1,
+        "model": {
+          "id": "pickup",
+          "name": "预约到店自提候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "自愿咨询后的预约入口",
+          "fulfilment": "约定时段到店自提",
+          "revenue_method": "交付后按件结算",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "68.00",
+          "unit_cost": "41.00",
+          "fixed_cost": "60.00",
+          "investment": "80.00",
+          "assumed_orders": 20,
+          "weekly_hours": 4,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "assessment": {
+          "model": {
+            "id": "pickup",
+            "name": "预约到店自提候选",
+            "status": "candidate",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "自愿咨询后的预约入口",
+            "fulfilment": "约定时段到店自提",
+            "revenue_method": "交付后按件结算",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "68.00",
+            "unit_cost": "41.00",
+            "fixed_cost": "60.00",
+            "investment": "80.00",
+            "assumed_orders": 20,
+            "weekly_hours": 4,
+            "costs_confirmed": false,
+            "version": 1,
+            "unit_cost_components": [
+              {
+                "id": "goods",
+                "label": "商品",
+                "amount": "40.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "pack",
+                "label": "包装",
+                "amount": "1.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              }
+            ]
+          },
+          "unit_contribution": "27.00",
+          "break_even_orders": 3,
+          "assumed_period_contribution": "480.00",
+          "investment_payback_periods": "0.17",
+          "missing_skills": [],
+          "issues": [
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [
+          {
+            "field": "channel",
+            "before": "自然到店",
+            "after": "自愿咨询后的预约入口"
+          },
+          {
+            "field": "fulfilment",
+            "before": "线下交付与人工售后",
+            "after": "约定时段到店自提"
+          },
+          {
+            "field": "revenue_method",
+            "before": "按件销售",
+            "after": "交付后按件结算"
+          }
+        ],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-60.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": "210.00"
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": "480.00"
+          }
+        ],
+        "comparable_period": true,
+        "blockers": [],
+        "warnings": [
+          "成本未核实，不能据此判断可持续",
+          "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+        ],
+        "perspectives": {
+          "inventory": [
+            "TOP_01：需要20件，现货40件",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "cash": [
+            "成本未核实，不能据此判断可持续",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "customer": [
+            "需求证据仍是待验证线索：全部为人工编制，订单不是预测",
+            "验证安排：先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+          ]
+        },
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+      },
+      {
+        "kind": "candidate",
+        "draft_id": "delivery",
+        "draft_version": 2,
+        "model": {
+          "id": "delivery",
+          "name": "平台展示后预约集中自提候选",
+          "status": "candidate",
+          "customer_segment": "社区到店居民",
+          "customer_problem": "试穿与选购",
+          "value_proposition": "到店试穿后购买",
+          "channel": "平台展示规则待核实，先限自愿咨询范围",
+          "fulfilment": "约定时段集中自提，不提供即时配送",
+          "revenue_method": "到店交付后结算",
+          "key_resources": "已有服装和店面",
+          "required_skills": "接待\n库存核对",
+          "available_skills": "接待\n库存核对",
+          "demand_evidence": "全部为人工编制，订单不是预测",
+          "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+          "period_days": 14,
+          "unit_revenue": "70.00",
+          "unit_cost": "41.00",
+          "fixed_cost": "100.00",
+          "investment": "100.00",
+          "assumed_orders": 20,
+          "weekly_hours": 4,
+          "costs_confirmed": false,
+          "version": 1,
+          "unit_cost_components": [
+            {
+              "id": "goods",
+              "label": "商品",
+              "amount": "40.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            },
+            {
+              "id": "pack",
+              "label": "包装",
+              "amount": "1.00",
+              "basis": "构造测算假设，待核实",
+              "basis_kind": "assumption"
+            }
+          ]
+        },
+        "assessment": {
+          "model": {
+            "id": "delivery",
+            "name": "平台展示后预约集中自提候选",
+            "status": "candidate",
+            "customer_segment": "社区到店居民",
+            "customer_problem": "试穿与选购",
+            "value_proposition": "到店试穿后购买",
+            "channel": "平台展示规则待核实，先限自愿咨询范围",
+            "fulfilment": "约定时段集中自提，不提供即时配送",
+            "revenue_method": "到店交付后结算",
+            "key_resources": "已有服装和店面",
+            "required_skills": "接待\n库存核对",
+            "available_skills": "接待\n库存核对",
+            "demand_evidence": "全部为人工编制，订单不是预测",
+            "source_note": "构造的现货单件增量试验假设；不含原店租与原人工，不是市场报价或全店利润",
+            "period_days": 14,
+            "unit_revenue": "70.00",
+            "unit_cost": "41.00",
+            "fixed_cost": "100.00",
+            "investment": "100.00",
+            "assumed_orders": 20,
+            "weekly_hours": 4,
+            "costs_confirmed": false,
+            "version": 1,
+            "unit_cost_components": [
+              {
+                "id": "goods",
+                "label": "商品",
+                "amount": "40.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              },
+              {
+                "id": "pack",
+                "label": "包装",
+                "amount": "1.00",
+                "basis": "构造测算假设，待核实",
+                "basis_kind": "assumption"
+              }
+            ]
+          },
+          "unit_contribution": "29.00",
+          "break_even_orders": 4,
+          "assumed_period_contribution": "480.00",
+          "investment_payback_periods": "0.21",
+          "missing_skills": [],
+          "issues": [
+            "成本未核实，不能据此判断可持续"
+          ],
+          "unknowns": [
+            "订单量与需求证据仍需实地验证",
+            "回收期不包含资金时序、税费和未填成本，不等于现金可承受性"
+          ]
+        },
+        "structural_field_changes": [
+          {
+            "field": "channel",
+            "before": "自然到店",
+            "after": "平台展示规则待核实，先限自愿咨询范围"
+          },
+          {
+            "field": "fulfilment",
+            "before": "线下交付与人工售后",
+            "after": "约定时段集中自提，不提供即时配送"
+          },
+          {
+            "field": "revenue_method",
+            "before": "按件销售",
+            "after": "到店交付后结算"
+          }
+        ],
+        "structural_change_notice": "字段变化只用于核对设计，不自动证明商业创新或客户需求。",
+        "scenarios": [
+          {
+            "scenario": "zero_orders",
+            "orders": 0,
+            "period_contribution": "-100.00"
+          },
+          {
+            "scenario": "half_declared",
+            "orders": 10,
+            "period_contribution": "190.00"
+          },
+          {
+            "scenario": "declared",
+            "orders": 20,
+            "period_contribution": "480.00"
+          }
+        ],
+        "comparable_period": true,
+        "blockers": [],
+        "warnings": [
+          "成本未核实，不能据此判断可持续",
+          "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+        ],
+        "perspectives": {
+          "inventory": [
+            "TOP_01：需要20件，现货40件",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "cash": [
+            "成本未核实，不能据此判断可持续",
+            "模式订单数是假设；入库不代表可执行，仍须具体方案现金与库存复核"
+          ],
+          "customer": [
+            "需求证据仍是待验证线索：全部为人工编制，订单不是预测",
+            "验证安排：先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+          ]
+        },
+        "evidence_ids": [
+          "fixture_not_agent_evidence"
+        ],
+        "validation_plan": "先记录真实询问与可接受的交付时段，再核实费用、工时和商品范围；通过后另建行动方案核算现金时序"
+      }
+    ],
+    "same_period": true,
+    "selected_winner": null,
+    "notice": "按声明口径比较经营方式，不预测订单或自动选出最优模式。期间贡献不扣初始投入；投入不重复当费用。回款、库存和必要付款须在具体行动方案中另做逐日核查。"
+  },
+  "cloud_calls": 0
+}

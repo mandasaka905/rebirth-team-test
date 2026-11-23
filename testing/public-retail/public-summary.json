@@ -1,0 +1,157 @@
+{
+  "source": "https://archive.ics.uci.edu/dataset/352/online-retail",
+  "citation": "Chen, D. (2015). Online Retail. UCI. https://doi.org/10.24432/C5BW33",
+  "license": "CC BY 4.0",
+  "archive_sha256": "f5385cbb54bbebf7196389109c6b0621faab0c304e3702548165e71c84aede8b",
+  "xlsx_sha256": "43465a06f2ccf7c8b5bd2892bc7defb52f97487934fe93b16ae4c3936424676d",
+  "sheet": "sheet1",
+  "period": [
+    "2010-12-01",
+    "2011-12-09"
+  ],
+  "counts": {
+    "rows": 541909,
+    "cancelled_rows": 9288,
+    "negative_quantity_rows": 10624,
+    "nonpositive_price_rows": 2517,
+    "missing_customer_id": 135080
+  },
+  "selected_products": [
+    {
+      "sku": "23843",
+      "positive_units": 80995,
+      "negative_units": 80995,
+      "gross_gbp": "168469.60",
+      "signed_gbp": "0.00",
+      "months": {
+        "2011-12": 80995
+      },
+      "rows": [
+        {
+          "xlsx_row": 540423,
+          "date": "2011-12-09",
+          "quantity": 80995,
+          "unit_price_gbp": "2.08",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 540424,
+          "date": "2011-12-09",
+          "quantity": -80995,
+          "unit_price_gbp": "2.08",
+          "cancelled": true
+        }
+      ],
+      "description": "PAPER CRAFT , LITTLE BIRDIE"
+    },
+    {
+      "sku": "23166",
+      "positive_units": 78033,
+      "negative_units": 74494,
+      "gross_gbp": "81700.92",
+      "signed_gbp": "4221.28",
+      "months": {
+        "2011-01": 74215,
+        "2011-05": 801,
+        "2011-06": 397,
+        "2011-07": 731,
+        "2011-08": 427,
+        "2011-09": 346,
+        "2011-10": 250,
+        "2011-11": 659,
+        "2011-12": 207
+      },
+      "rows": [
+        {
+          "xlsx_row": 61621,
+          "date": "2011-01-18",
+          "quantity": 74215,
+          "unit_price_gbp": "1.04",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 61626,
+          "date": "2011-01-18",
+          "quantity": -74215,
+          "unit_price_gbp": "1.04",
+          "cancelled": true
+        },
+        {
+          "xlsx_row": 186772,
+          "date": "2011-05-12",
+          "quantity": 96,
+          "unit_price_gbp": "1.04",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 187198,
+          "date": "2011-05-12",
+          "quantity": 4,
+          "unit_price_gbp": "1.25",
+          "cancelled": false
+        }
+      ],
+      "description": "MEDIUM CERAMIC TOP STORAGE JAR"
+    },
+    {
+      "sku": "22197",
+      "positive_units": 56921,
+      "negative_units": 471,
+      "gross_gbp": "51354.02",
+      "signed_gbp": "50987.47",
+      "months": {
+        "2010-12": 2738,
+        "2011-01": 1824,
+        "2011-02": 2666,
+        "2011-03": 2803,
+        "2011-04": 1869,
+        "2011-05": 6849,
+        "2011-06": 2095,
+        "2011-07": 1876,
+        "2011-08": 5421,
+        "2011-09": 4196,
+        "2011-10": 5907,
+        "2011-11": 12460,
+        "2011-12": 6217
+      },
+      "rows": [
+        {
+          "xlsx_row": 223,
+          "date": "2010-12-01",
+          "quantity": 100,
+          "unit_price_gbp": "0.72",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 395,
+          "date": "2010-12-01",
+          "quantity": 36,
+          "unit_price_gbp": "0.85",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 534,
+          "date": "2010-12-01",
+          "quantity": 2,
+          "unit_price_gbp": "0.85",
+          "cancelled": false
+        },
+        {
+          "xlsx_row": 612,
+          "date": "2010-12-01",
+          "quantity": 5,
+          "unit_price_gbp": "0.85",
+          "cancelled": false
+        }
+      ],
+      "description": "POPCORN HOLDER"
+    }
+  ],
+  "selection": "Top 3 all-numeric SKUs by positive, non-cancelled units; ties by SKU.",
+  "limitations": [
+    "Prices are GBP. No conversion to CNY.",
+    "No stock balance, purchase cost, rent, bank balance or causal campaign effect is present.",
+    "Signed amounts include cancellation/adjustment lines; they are not audited cash receipts.",
+    "No customer identifiers are exported."
+  ]
+}

@@ -1,0 +1,1744 @@
+{
+  "kind": "constructed_local_verification_not_ai_run",
+  "ledger": {
+    "merchant_id": "benchmark_c02",
+    "name": "社区零售费用分解示例（构造资料）",
+    "as_of": "2026-11-01",
+    "currency": "CNY",
+    "synthetic": true,
+    "merchant_confirmed": false,
+    "goal": "在明确假设下比较库存处理方案，保护现金底线。 用户附带了一份尚未核查的候选方案candidate_for_review；请核查其资金、库存和证据条件，必要时追问或提出修订，禁止直接视为已批准方案。",
+    "cash_balance": "5000.00",
+    "reserve_floor": "1000.00",
+    "max_trial_budget": "1500.00",
+    "weekly_available_hours": 8,
+    "sources": {
+      "public_reference": "UCI Online Retail, CC BY 4.0；仅商品名称来自公开记录。",
+      "scenario": "人工构造的人民币资金、库存、成本、日期和需求假设；不是汇率转换或商户实测。"
+    },
+    "completeness": {
+      "obligations_complete": true,
+      "receivables_complete": true,
+      "inventory_complete": true
+    },
+    "products": [
+      {
+        "sku": "SKU_23843",
+        "name": "PAPER CRAFT , LITTLE BIRDIE",
+        "stock": 20,
+        "sales_30d": 2,
+        "received_on": "2026-04-01",
+        "unit_cost": "40.00",
+        "unit_price": "70.00",
+        "size_complete": true,
+        "source_id": "scenario"
+      },
+      {
+        "sku": "SKU_23166",
+        "name": "MEDIUM CERAMIC TOP STORAGE JAR",
+        "stock": 20,
+        "sales_30d": 2,
+        "received_on": "2026-04-01",
+        "unit_cost": "40.00",
+        "unit_price": "70.00",
+        "size_complete": true,
+        "source_id": "scenario"
+      },
+      {
+        "sku": "SKU_22197",
+        "name": "POPCORN HOLDER",
+        "stock": 20,
+        "sales_30d": 2,
+        "received_on": "2026-04-01",
+        "unit_cost": "40.00",
+        "unit_price": "70.00",
+        "size_complete": true,
+        "source_id": "scenario"
+      }
+    ],
+    "obligations": [
+      {
+        "id": "rent",
+        "date": "2026-11-03",
+        "amount": "2000.00",
+        "source_id": "scenario"
+      }
+    ],
+    "receivables": [],
+    "customer_signals": [],
+    "candidate_for_review": {
+      "id": "clearance",
+      "version": 1,
+      "owner": "inventory",
+      "title": "小批量处理库存的待验证方案",
+      "upfront_cost": "3000.00",
+      "other_cost": "0.00",
+      "spend_date": "2026-11-02",
+      "weekly_hours": 3,
+      "sales_assumption": "unverified",
+      "costs_confirmed": true,
+      "items": [
+        {
+          "sku": "SKU_23843",
+          "quantity": 5,
+          "price": "60.00",
+          "variable_cash_cost": "0.00",
+          "receipt_date": "2026-11-06"
+        }
+      ],
+      "rationale": "预置测试方案，不是智能体输出。",
+      "assumptions": [
+        "销量、成本、库存、资金均为人工构造；不代表预测。"
+      ],
+      "stop_conditions": [
+        "不得超过批准预算，出现资料不符即暂停。"
+      ]
+    }
+  },
+  "before": {
+    "id": "clearance",
+    "version": 1,
+    "owner": "inventory",
+    "title": "小批量处理库存的待验证方案",
+    "upfront_cost": "3000.00",
+    "other_cost": "0.00",
+    "spend_date": "2026-11-02",
+    "weekly_hours": 3,
+    "sales_assumption": "unverified",
+    "costs_confirmed": false,
+    "items": [
+      {
+        "sku": "SKU_23843",
+        "quantity": 5,
+        "price": "60.00",
+        "variable_cash_cost": "0.00",
+        "receipt_date": "2026-11-06"
+      }
+    ],
+    "rationale": "预置测试方案，不是智能体输出。",
+    "evidence_ids": [
+      "fixture_only_not_agent_evidence"
+    ],
+    "assumptions": [
+      "销量、成本、库存、资金均为人工构造；不代表预测。"
+    ],
+    "stop_conditions": [
+      "不得超过批准预算，出现资料不符即暂停。"
+    ],
+    "model_refs": [],
+    "expense_breakdown": [
+      {
+        "id": "print",
+        "label": "印刷宣传材料",
+        "quantity": 500,
+        "unit_cost": "2.00",
+        "amount": "1000.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      },
+      {
+        "id": "advert",
+        "label": "付费推广",
+        "quantity": 1,
+        "unit_cost": "1800.00",
+        "amount": "1800.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      },
+      {
+        "id": "bags",
+        "label": "备置包装",
+        "quantity": 100,
+        "unit_cost": "2.00",
+        "amount": "200.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      }
+    ]
+  },
+  "after": {
+    "id": "clearance",
+    "version": 2,
+    "owner": "inventory",
+    "title": "先核对需求的小批量现货试验候选",
+    "upfront_cost": "80.00",
+    "other_cost": "0.00",
+    "spend_date": "2026-11-04",
+    "weekly_hours": 3,
+    "sales_assumption": "unverified",
+    "costs_confirmed": false,
+    "items": [
+      {
+        "sku": "SKU_23843",
+        "quantity": 5,
+        "price": "60.00",
+        "variable_cash_cost": "0.00",
+        "receipt_date": "2026-11-06"
+      }
+    ],
+    "rationale": "取消付费推广；宣传材料从500份减至20份、包装从100份减至20份；保留现货商品及销售假设。所有分项价格仍待核实。",
+    "evidence_ids": [
+      "fixture_only_not_agent_evidence"
+    ],
+    "assumptions": [
+      "销量、成本、库存、资金均为人工构造；不代表预测。"
+    ],
+    "stop_conditions": [
+      "不得超过批准预算，出现资料不符即暂停。"
+    ],
+    "model_refs": [],
+    "expense_breakdown": [
+      {
+        "id": "print",
+        "label": "印刷宣传材料",
+        "quantity": 20,
+        "unit_cost": "2.00",
+        "amount": "40.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      },
+      {
+        "id": "advert",
+        "label": "取消付费推广",
+        "quantity": 0,
+        "unit_cost": "1800.00",
+        "amount": "0.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      },
+      {
+        "id": "bags",
+        "label": "备置包装",
+        "quantity": 20,
+        "unit_cost": "2.00",
+        "amount": "40.00",
+        "basis": "独立构造的演示假设，不是商户报价或市场价格",
+        "basis_kind": "assumption"
+      }
+    ]
+  },
+  "before_calculation": {
+    "proposal_id": "clearance",
+    "checks": [
+      {
+        "code": "BUDGET_EXCEEDED",
+        "limit": "1500.00"
+      },
+      {
+        "code": "CASH_RESERVE_BREACH_ZERO_SALES",
+        "date": "2026-11-03"
+      }
+    ],
+    "unknowns": [
+      "销量尚未由真实成交验证；基准情景仅是商户假设",
+      "活动及单件变动费用尚未核实，不能把零费用当作事实",
+      "当前底账为合成测试数据，不代表真实商户经营结果",
+      "商户尚未确认经营底账和约束"
+    ],
+    "constraint_pass": false,
+    "eligible_for_merchant_review": false,
+    "declared_revenue": "300.00",
+    "known_stock_cost": "200.00",
+    "gross_profit_after_declared_trial_costs": "-2900.00",
+    "incremental_cash_under_declared_sales": "-2700.00",
+    "trial_cash_commitment": "3000.00",
+    "scenarios": [
+      {
+        "scenario": "zero_sales",
+        "minimum_cash_before_receipts": "0.00",
+        "ending_cash": "0.00",
+        "first_reserve_breach": "2026-11-03",
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "3000.00",
+            "inflow": "0.00",
+            "closing": "2000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          }
+        ]
+      },
+      {
+        "scenario": "half_sales",
+        "minimum_cash_before_receipts": "0.00",
+        "ending_cash": "120.00",
+        "first_reserve_breach": "2026-11-03",
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "3000.00",
+            "inflow": "0.00",
+            "closing": "2000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "120.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "120.00"
+          }
+        ]
+      },
+      {
+        "scenario": "declared_sales",
+        "minimum_cash_before_receipts": "0.00",
+        "ending_cash": "300.00",
+        "first_reserve_breach": "2026-11-03",
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "3000.00",
+            "inflow": "0.00",
+            "closing": "2000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "0.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "300.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "300.00"
+          }
+        ]
+      }
+    ],
+    "procurement": {
+      "lines": [],
+      "checks": [],
+      "unknowns": [],
+      "cash_commitment": "0.00",
+      "stock_path": [
+        {
+          "sku": "SKU_23843",
+          "opening": 20,
+          "ordered": 0,
+          "available_on_delivery": 20,
+          "declared_sold": 5,
+          "remaining_on_delivery": 15
+        }
+      ],
+      "costs_complete": true,
+      "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+    },
+    "definitions": [
+      "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+      "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+      "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+      "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+    ]
+  },
+  "after_calculation": {
+    "proposal_id": "clearance",
+    "checks": [],
+    "unknowns": [
+      "销量尚未由真实成交验证；基准情景仅是商户假设",
+      "活动及单件变动费用尚未核实，不能把零费用当作事实",
+      "当前底账为合成测试数据，不代表真实商户经营结果",
+      "商户尚未确认经营底账和约束"
+    ],
+    "constraint_pass": true,
+    "eligible_for_merchant_review": false,
+    "declared_revenue": "300.00",
+    "known_stock_cost": "200.00",
+    "gross_profit_after_declared_trial_costs": "20.00",
+    "incremental_cash_under_declared_sales": "220.00",
+    "trial_cash_commitment": "80.00",
+    "scenarios": [
+      {
+        "scenario": "zero_sales",
+        "minimum_cash_before_receipts": "2920.00",
+        "ending_cash": "2920.00",
+        "first_reserve_breach": null,
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "3000.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "80.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          }
+        ]
+      },
+      {
+        "scenario": "half_sales",
+        "minimum_cash_before_receipts": "2920.00",
+        "ending_cash": "3040.00",
+        "first_reserve_breach": null,
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "3000.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "80.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "120.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3040.00"
+          }
+        ]
+      },
+      {
+        "scenario": "declared_sales",
+        "minimum_cash_before_receipts": "2920.00",
+        "ending_cash": "3220.00",
+        "first_reserve_breach": null,
+        "days": [
+          {
+            "date": "2026-11-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-02",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "5000.00"
+          },
+          {
+            "date": "2026-11-03",
+            "outflow": "2000.00",
+            "inflow": "0.00",
+            "closing": "3000.00"
+          },
+          {
+            "date": "2026-11-04",
+            "outflow": "80.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-05",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "2920.00"
+          },
+          {
+            "date": "2026-11-06",
+            "outflow": "0.00",
+            "inflow": "300.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-07",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-08",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-09",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-10",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-11",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-12",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-13",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-14",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-15",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-16",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-17",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-18",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-19",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-20",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-21",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-22",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-23",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-24",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-25",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-26",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-27",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-28",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-29",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-11-30",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          },
+          {
+            "date": "2026-12-01",
+            "outflow": "0.00",
+            "inflow": "0.00",
+            "closing": "3220.00"
+          }
+        ]
+      }
+    ],
+    "procurement": {
+      "lines": [],
+      "checks": [],
+      "unknowns": [],
+      "cash_commitment": "0.00",
+      "stock_path": [
+        {
+          "sku": "SKU_23843",
+          "opening": 20,
+          "ordered": 0,
+          "available_on_delivery": 20,
+          "declared_sold": 5,
+          "remaining_on_delivery": 15
+        }
+      ],
+      "costs_complete": true,
+      "notice": "到货按供应条件计算，成本采用现货优先的FIFO假设；采购全额和运费即使零销量也付款，未售新货不重复扣作已售成本；不自动下单或登记真实入库。"
+    },
+    "definitions": [
+      "已有库存采购款视为已支付：进入毛利成本，不再次列入方案现金支出。未付采购款必须在应付款中录入。",
+      "other_cost为预付额外现金费用；单件变动费用按成交回款日先付后收；补货按供应条件全额付款，不支持分期；运费作为期间费用，未售新货作为库存，不重复算已售成本。",
+      "零销量、半销量是敏感性情景，不是概率预测；半销量按每种商品件数向下取整。返回现金结果依赖录入的全部必要收支。",
+      "方案逐个评估，不能叠加执行；多项行动需合并为一份方案后重算。"
+    ]
+  },
+  "knowledge_queries": [
+    {
+      "query": "现金流 付款时序",
+      "matches": [
+        {
+          "id": "ref_cashflow",
+          "title": "利润与现金流、付款时序",
+          "content": "账面有利润仍可能因回款晚于必要付款而缺现金。项目应用：分别记录实际收付、应收应付和采购承诺，逐日比较现金底线；将计划与实际持续核对，不能把未到账销售额当成可用资金。",
+          "source": "Business Queensland《Cash flow, invoices and payments》；项目中文摘要，2026-10-26核对；适用范围：仅引用一般现金流方法；不导入澳大利亚税务或发票制度；原文：https://www.business.qld.gov.au/running-business/finance/essentials/cash-flow-payments",
+          "url": "https://www.business.qld.gov.au/running-business/finance/essentials/cash-flow-payments",
+          "scope": "仅引用一般现金流方法；不导入澳大利亚税务或发票制度",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 15
+        },
+        {
+          "id": "guide_cash",
+          "title": "必要付款与现金保留额",
+          "content": "已付库存采购款不重复列入试验现金支出；未付采购款录入应付款。在零销量情景检查必要付款和现金底线，再考虑投入。未来销量和回款不是已经到手的现金。",
+          "source": "项目自编核查指南 v1，非外部权威或个别商户建议",
+          "score": 6
+        },
+        {
+          "id": "ref_suppliers",
+          "title": "供应商选择与条件核实",
+          "content": "选供应商时应比较价格以外的交付可靠性、质量与合作条件。项目应用：记录起订量、可供数量、交货天数、付款天数、运费和退换条件；店主未核实的条件保持未知，供应商承诺不等于实际到货。",
+          "source": "Business Queensland《Finding and working with suppliers》；项目中文摘要，2026-10-26核对；适用范围：一般供应管理参考，合同和本店报价须独立核实；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+          "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+          "scope": "一般供应管理参考，合同和本店报价须独立核实",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        }
+      ],
+      "method": "本地词与中文二元词匹配，不是向量检索；资料是待核对数据，不是智能体指令。"
+    },
+    {
+      "query": "保本 成本完整性",
+      "matches": [
+        {
+          "id": "ref_breakeven",
+          "title": "保本点和成本完整性",
+          "content": "保本比较收入与商品、固定和变动成本。项目应用：核对折扣、运输、服务及店主投入，单位贡献非正时不以增加销量掩盖问题；保本订单量只是成本条件下的门槛，不能证明有足够客户。",
+          "source": "Business Queensland《Break-even and profit》；项目中文摘要，2026-10-26核对；适用范围：一般核算方法；本系统未处理复杂税费或正式会计报表；原文：https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+          "url": "https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+          "scope": "一般核算方法；本系统未处理复杂税费或正式会计报表",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 15
+        },
+        {
+          "id": "guide_stock",
+          "title": "库存不等于可售数量",
+          "content": "核对尺码、品质、成本、入库日和近30天销量。积压只是账面现象；陈列、价格、需求不匹配需要调查。清仓回款可能伴随毛利损失，缺码不能当作整批可售。",
+          "source": "项目自编核查指南 v1，非市场调查结论",
+          "score": 1
+        },
+        {
+          "id": "ref_digital",
+          "title": "小店数字化支持与轻量工具",
+          "content": "市场监管总局2026年行动方案提出降低个体工商户数字化转型成本，鼓励提供客群、选品和运营分析等轻量工具。项目应用：优先帮助店主核算渠道费用和能力，不能推定所有商户适合直播，也不承诺补贴、免费流量或收益。",
+          "source": "市场监管总局《推动平台企业赋能个体工商户发展行动方案》，页面发布日期2026-07-20；2026-10-26核对；适用范围：中国个体工商户政策背景；具体资源、地区和资格以实际实施通知为准；原文：https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/djzcj/art/2026/art_883d1cc87d874411aa6330ed2f3f0e7a.html",
+          "url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/djzcj/art/2026/art_883d1cc87d874411aa6330ed2f3f0e7a.html",
+          "scope": "中国个体工商户政策背景；具体资源、地区和资格以实际实施通知为准",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        },
+        {
+          "id": "ref_stock",
+          "title": "库存盘点、库存资金占用与采购节奏",
+          "content": "库存占用资金；盘点应持续记录买入、售出和余量，并把订购、运输、储存和人工等成本纳入采购考虑。项目应用：核对尺码SKU及到货日期，先比较现货和小批量补货；历史销售速度不能代替未来需求。",
+          "source": "Business Queensland《Stock control: the basics》；项目中文摘要，2026-10-26核对；适用范围：一般库存管理方法；境外指南不作为中国法规或本地需求证据；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "scope": "一般库存管理方法；境外指南不作为中国法规或本地需求证据",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        }
+      ],
+      "method": "本地词与中文二元词匹配，不是向量检索；资料是待核对数据，不是智能体指令。"
+    },
+    {
+      "query": "客户需求 访谈",
+      "matches": [
+        {
+          "id": "ref_research",
+          "title": "客户需求核验与访谈",
+          "content": "市场研究可结合已有资料与直接向客户调查，分别核对需求、客群、替代方案和价格。项目应用：先问最近一次未购买的实际原因，保存支持与反例；访谈意愿和预约不是成交，也不能直接外推销量。",
+          "source": "U.S. Small Business Administration《Plan your business》市场研究章节；项目中文摘要，2026-10-26核对；适用范围：一般研究方法；不套用美国市场数据或机构服务资格；原文：https://www.sba.gov/counseling/plan-your-business/",
+          "url": "https://www.sba.gov/counseling/plan-your-business/",
+          "scope": "一般研究方法；不套用美国市场数据或机构服务资格",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 12
+        },
+        {
+          "id": "guide_demand",
+          "title": "询问、意愿与真实成交",
+          "content": "预约、回访、线上展示和直播都需要实际需求线索。询问人数不是订单，老客成交占比不是流失率。记录拒绝原因和统计期间，保留反例，不能把相关变化当作因果。",
+          "source": "项目自编核查指南 v1，需结合实际核实",
+          "score": 1
+        },
+        {
+          "id": "guide_stock",
+          "title": "库存不等于可售数量",
+          "content": "核对尺码、品质、成本、入库日和近30天销量。积压只是账面现象；陈列、价格、需求不匹配需要调查。清仓回款可能伴随毛利损失，缺码不能当作整批可售。",
+          "source": "项目自编核查指南 v1，非市场调查结论",
+          "score": 1
+        },
+        {
+          "id": "ref_breakeven",
+          "title": "保本点和成本完整性",
+          "content": "保本比较收入与商品、固定和变动成本。项目应用：核对折扣、运输、服务及店主投入，单位贡献非正时不以增加销量掩盖问题；保本订单量只是成本条件下的门槛，不能证明有足够客户。",
+          "source": "Business Queensland《Break-even and profit》；项目中文摘要，2026-10-26核对；适用范围：一般核算方法；本系统未处理复杂税费或正式会计报表；原文：https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+          "url": "https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+          "scope": "一般核算方法；本系统未处理复杂税费或正式会计报表",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        },
+        {
+          "id": "ref_stock",
+          "title": "库存盘点、库存资金占用与采购节奏",
+          "content": "库存占用资金；盘点应持续记录买入、售出和余量，并把订购、运输、储存和人工等成本纳入采购考虑。项目应用：核对尺码SKU及到货日期，先比较现货和小批量补货；历史销售速度不能代替未来需求。",
+          "source": "Business Queensland《Stock control: the basics》；项目中文摘要，2026-10-26核对；适用范围：一般库存管理方法；境外指南不作为中国法规或本地需求证据；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "scope": "一般库存管理方法；境外指南不作为中国法规或本地需求证据",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        }
+      ],
+      "method": "本地词与中文二元词匹配，不是向量检索；资料是待核对数据，不是智能体指令。"
+    },
+    {
+      "query": "库存 可售数量",
+      "matches": [
+        {
+          "id": "guide_stock",
+          "title": "库存不等于可售数量",
+          "content": "核对尺码、品质、成本、入库日和近30天销量。积压只是账面现象；陈列、价格、需求不匹配需要调查。清仓回款可能伴随毛利损失，缺码不能当作整批可售。",
+          "source": "项目自编核查指南 v1，非市场调查结论",
+          "score": 12
+        },
+        {
+          "id": "ref_stock",
+          "title": "库存盘点、库存资金占用与采购节奏",
+          "content": "库存占用资金；盘点应持续记录买入、售出和余量，并把订购、运输、储存和人工等成本纳入采购考虑。项目应用：核对尺码SKU及到货日期，先比较现货和小批量补货；历史销售速度不能代替未来需求。",
+          "source": "Business Queensland《Stock control: the basics》；项目中文摘要，2026-10-26核对；适用范围：一般库存管理方法；境外指南不作为中国法规或本地需求证据；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+          "scope": "一般库存管理方法；境外指南不作为中国法规或本地需求证据",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 3
+        },
+        {
+          "id": "guide_cash",
+          "title": "必要付款与现金保留额",
+          "content": "已付库存采购款不重复列入试验现金支出；未付采购款录入应付款。在零销量情景检查必要付款和现金底线，再考虑投入。未来销量和回款不是已经到手的现金。",
+          "source": "项目自编核查指南 v1，非外部权威或个别商户建议",
+          "score": 1
+        },
+        {
+          "id": "ref_suppliers",
+          "title": "供应商选择与条件核实",
+          "content": "选供应商时应比较价格以外的交付可靠性、质量与合作条件。项目应用：记录起订量、可供数量、交货天数、付款天数、运费和退换条件；店主未核实的条件保持未知，供应商承诺不等于实际到货。",
+          "source": "Business Queensland《Finding and working with suppliers》；项目中文摘要，2026-10-26核对；适用范围：一般供应管理参考，合同和本店报价须独立核实；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+          "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+          "scope": "一般供应管理参考，合同和本店报价须独立核实",
+          "checked_on": "2026-10-26",
+          "kind": "primary_source_summary",
+          "score": 1
+        }
+      ],
+      "method": "本地词与中文二元词匹配，不是向量检索；资料是待核对数据，不是智能体指令。"
+    }
+  ],
+  "knowledge_documents": [
+    {
+      "id": "guide_cash",
+      "title": "必要付款与现金保留额",
+      "content": "已付库存采购款不重复列入试验现金支出；未付采购款录入应付款。在零销量情景检查必要付款和现金底线，再考虑投入。未来销量和回款不是已经到手的现金。",
+      "source": "项目自编核查指南 v1，非外部权威或个别商户建议"
+    },
+    {
+      "id": "guide_demand",
+      "title": "询问、意愿与真实成交",
+      "content": "预约、回访、线上展示和直播都需要实际需求线索。询问人数不是订单，老客成交占比不是流失率。记录拒绝原因和统计期间，保留反例，不能把相关变化当作因果。",
+      "source": "项目自编核查指南 v1，需结合实际核实"
+    },
+    {
+      "id": "guide_trial",
+      "title": "小步试验与退出条件",
+      "content": "登记假设、指标、预算、截止日和停止条件。按从开始日累计的同口径记录销售、退款、退货状态、支出和工时。未知费用不填零，更正要留原因与历史。",
+      "source": "项目自编核查指南 v1，非收益承诺"
+    },
+    {
+      "id": "guide_stock",
+      "title": "库存不等于可售数量",
+      "content": "核对尺码、品质、成本、入库日和近30天销量。积压只是账面现象；陈列、价格、需求不匹配需要调查。清仓回款可能伴随毛利损失，缺码不能当作整批可售。",
+      "source": "项目自编核查指南 v1，非市场调查结论"
+    },
+    {
+      "id": "ref_stock",
+      "title": "库存盘点、库存资金占用与采购节奏",
+      "content": "库存占用资金；盘点应持续记录买入、售出和余量，并把订购、运输、储存和人工等成本纳入采购考虑。项目应用：核对尺码SKU及到货日期，先比较现货和小批量补货；历史销售速度不能代替未来需求。",
+      "source": "Business Queensland《Stock control: the basics》；项目中文摘要，2026-10-26核对；适用范围：一般库存管理方法；境外指南不作为中国法规或本地需求证据；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+      "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/stock-control",
+      "scope": "一般库存管理方法；境外指南不作为中国法规或本地需求证据",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    },
+    {
+      "id": "ref_suppliers",
+      "title": "供应商选择与条件核实",
+      "content": "选供应商时应比较价格以外的交付可靠性、质量与合作条件。项目应用：记录起订量、可供数量、交货天数、付款天数、运费和退换条件；店主未核实的条件保持未知，供应商承诺不等于实际到货。",
+      "source": "Business Queensland《Finding and working with suppliers》；项目中文摘要，2026-10-26核对；适用范围：一般供应管理参考，合同和本店报价须独立核实；原文：https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+      "url": "https://www.business.qld.gov.au/running-business/suppliers-stock/finding",
+      "scope": "一般供应管理参考，合同和本店报价须独立核实",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    },
+    {
+      "id": "ref_cashflow",
+      "title": "利润与现金流、付款时序",
+      "content": "账面有利润仍可能因回款晚于必要付款而缺现金。项目应用：分别记录实际收付、应收应付和采购承诺，逐日比较现金底线；将计划与实际持续核对，不能把未到账销售额当成可用资金。",
+      "source": "Business Queensland《Cash flow, invoices and payments》；项目中文摘要，2026-10-26核对；适用范围：仅引用一般现金流方法；不导入澳大利亚税务或发票制度；原文：https://www.business.qld.gov.au/running-business/finance/essentials/cash-flow-payments",
+      "url": "https://www.business.qld.gov.au/running-business/finance/essentials/cash-flow-payments",
+      "scope": "仅引用一般现金流方法；不导入澳大利亚税务或发票制度",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    },
+    {
+      "id": "ref_breakeven",
+      "title": "保本点和成本完整性",
+      "content": "保本比较收入与商品、固定和变动成本。项目应用：核对折扣、运输、服务及店主投入，单位贡献非正时不以增加销量掩盖问题；保本订单量只是成本条件下的门槛，不能证明有足够客户。",
+      "source": "Business Queensland《Break-even and profit》；项目中文摘要，2026-10-26核对；适用范围：一般核算方法；本系统未处理复杂税费或正式会计报表；原文：https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+      "url": "https://www.business.qld.gov.au/running-business/finance/essentials/break-even-profit",
+      "scope": "一般核算方法；本系统未处理复杂税费或正式会计报表",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    },
+    {
+      "id": "ref_research",
+      "title": "客户需求核验与访谈",
+      "content": "市场研究可结合已有资料与直接向客户调查，分别核对需求、客群、替代方案和价格。项目应用：先问最近一次未购买的实际原因，保存支持与反例；访谈意愿和预约不是成交，也不能直接外推销量。",
+      "source": "U.S. Small Business Administration《Plan your business》市场研究章节；项目中文摘要，2026-10-26核对；适用范围：一般研究方法；不套用美国市场数据或机构服务资格；原文：https://www.sba.gov/counseling/plan-your-business/",
+      "url": "https://www.sba.gov/counseling/plan-your-business/",
+      "scope": "一般研究方法；不套用美国市场数据或机构服务资格",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    },
+    {
+      "id": "ref_digital",
+      "title": "小店数字化支持与轻量工具",
+      "content": "市场监管总局2026年行动方案提出降低个体工商户数字化转型成本，鼓励提供客群、选品和运营分析等轻量工具。项目应用：优先帮助店主核算渠道费用和能力，不能推定所有商户适合直播，也不承诺补贴、免费流量或收益。",
+      "source": "市场监管总局《推动平台企业赋能个体工商户发展行动方案》，页面发布日期2026-07-20；2026-10-26核对；适用范围：中国个体工商户政策背景；具体资源、地区和资格以实际实施通知为准；原文：https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/djzcj/art/2026/art_883d1cc87d874411aa6330ed2f3f0e7a.html",
+      "url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/djzcj/art/2026/art_883d1cc87d874411aa6330ed2f3f0e7a.html",
+      "scope": "中国个体工商户政策背景；具体资源、地区和资格以实际实施通知为准",
+      "checked_on": "2026-10-26",
+      "kind": "primary_source_summary"
+    }
+  ],
+  "notice": "费用修改由验证脚本预先编制，不冒充智能体生成。原多智能体运行另有真实日志，不能拼接成同一次运行。"
+}

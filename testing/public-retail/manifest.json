@@ -1,0 +1,7 @@
+{
+  "cases": 7,
+  "source_summary_sha256": "319c07b3efd19f4e58cb19a54f2efcc2affcde69ed61c94e22f9f644c90ffcd5",
+  "cases_sha256": "d97004f4dae511d50ee63ce7d17f75f835e4838acf3c543c4c4a48560bd5d463",
+  "model_calls": 0,
+  "selection_fixed_before_model_evaluation": true
+}
